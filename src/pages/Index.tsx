@@ -19,14 +19,13 @@ const Index = () => {
       <section className="relative min-h-screen flex items-center pt-20">
         <HeroSlideshow />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-20">
+        <div className="relative z-10 max-w-7xl px-6 lg:px-16 py-20">
           <div className="max-w-2xl animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Real Estate Photo Editing That Sells Faster
+              Professional Real Estate Photo Editing
             </h1>
             <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl">
-              High-quality photo enhancements, virtual staging, and lighting edits
-              crafted specifically for real estate professionals.
+              High-quality, fast, and affordable editing to make your listings stand out and sell faster.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button variant="hero" asChild>
@@ -44,7 +43,7 @@ const Index = () => {
       <section className="bg-secondary py-8">
         <div className="text-center mb-8 pt-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Our Services
+            How We Enhance Your Listings
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto px-6">
             Scroll through each service to see the transformation

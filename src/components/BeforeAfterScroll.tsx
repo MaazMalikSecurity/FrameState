@@ -20,6 +20,7 @@ const BeforeAfterScroll = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const maxScroll = 400;
+  const navbarHeight = 80; 
 
   const handleWheel = useCallback((e: WheelEvent) => {
     const container = containerRef.current;
@@ -27,51 +28,69 @@ const BeforeAfterScroll = ({
 
     const rect = container.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    const containerCenter = rect.top + rect.height / 2;
-    const viewportCenter = viewportHeight / 2;
     
-    // Lock when container center is near viewport center
-    const distanceFromCenter = Math.abs(containerCenter - viewportCenter);
-    const isInCenter = distanceFromCenter < viewportHeight * 0.4;
+    // Calculate center accounting for navbar
+    const availableHeight = viewportHeight - navbarHeight;
+    const visualCenter = navbarHeight + availableHeight / 2;
+    const containerCenter = rect.top + rect.height / 2;
+    
+    // Lock when container center is near the visual center
+    const distanceFromCenter = Math.abs(containerCenter - visualCenter);
+    const isInCenter = distanceFromCenter < availableHeight * 0.15;
     
     const currentProgress = accumulatedScrollRef.current / maxScroll;
 
-    // Lock scroll if in center and not complete
-    if (isInCenter && currentProgress < 1) {
+    // Auto-unlock when at 0% or 100% boundary and trying to escape
+    if (currentProgress <= 0 && e.deltaY < 0) {
+      setIsLocked(false);
+      return;
+    }
+    
+    if (currentProgress >= 1 && e.deltaY > 0) {
+      setIsLocked(false);
+      return;
+    }
+
+    // Lock scroll when in center
+    if (isInCenter) {
       e.preventDefault();
       e.stopPropagation();
       setIsLocked(true);
       
-      // Only allow scrolling down (positive deltaY) to progress
-      if (e.deltaY > 0) {
-        accumulatedScrollRef.current += e.deltaY;
-        
-        if (accumulatedScrollRef.current > maxScroll) {
-          accumulatedScrollRef.current = maxScroll;
-        }
-
-        const newProgress = accumulatedScrollRef.current / maxScroll;
-        setScrollProgress(newProgress);
-        
-        // Release lock when complete
-        if (newProgress >= 1) {
-          setIsLocked(false);
-        }
+      // Snap container to center if not already there (smooth correction)
+      if (distanceFromCenter > 10) {
+        const scrollOffset = containerCenter - visualCenter;
+        window.scrollBy({ top: scrollOffset, behavior: 'smooth' });
       }
-    } else if (currentProgress >= 1) {
+      
+      // Accumulate scroll delta
+      accumulatedScrollRef.current += e.deltaY;
+      
+      // Clamp between 0 and maxScroll
+      if (accumulatedScrollRef.current < 0) accumulatedScrollRef.current = 0;
+      if (accumulatedScrollRef.current > maxScroll) accumulatedScrollRef.current = maxScroll;
+
+      const newProgress = accumulatedScrollRef.current / maxScroll;
+      setScrollProgress(newProgress);
+    } else {
       setIsLocked(false);
     }
-  }, []);
+  }, [navbarHeight]);
 
-  // Force scroll lock by preventing default on the document when locked
+  // Prevent default document scrolling when locked
   useEffect(() => {
+    const preventScroll = (e: Event) => {
+      if (isLocked) {
+        e.preventDefault();
+      }
+    };
+
     if (isLocked) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      document.addEventListener('scroll', preventScroll, { passive: false });
     }
+
     return () => {
-      document.body.style.overflow = '';
+      document.removeEventListener('scroll', preventScroll);
     };
   }, [isLocked]);
 
@@ -80,13 +99,15 @@ const BeforeAfterScroll = ({
     return () => window.removeEventListener("wheel", handleWheel);
   }, [handleWheel]);
 
-  // Reset when scrolling back up past this section
+  // Reset state when scrolling back up/down past this section via normal flow
   useEffect(() => {
     const handleScroll = () => {
       const container = containerRef.current;
       if (!container) return;
       
       const rect = container.getBoundingClientRect();
+      // If we scroll way past it (up or down), reset logic could go here
+      // Currently just resetting if it goes below viewport
       if (rect.top > window.innerHeight) {
         accumulatedScrollRef.current = 0;
         setScrollProgress(0);
@@ -107,38 +128,57 @@ const BeforeAfterScroll = ({
         reversed ? "lg:flex-row-reverse" : ""
       }`}>
         {/* Before/After Image Container */}
-        <div className="flex-1 w-full">
-          <div className="relative h-[420px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
-            <div
-              className="absolute inset-0 h-[200%] transition-transform duration-150 ease-out"
+        <div className="flex-1 w-full max-w-xl">
+          <div className="relative h-[350px] lg:h-[400px] rounded-xl overflow-hidden shadow-2xl bg-gray-100">
+            
+            {/* 1. BEFORE Image (Base Layer) */}
+            <img
+              src={beforeImage}
+              alt="Before"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+
+            {/* 2. AFTER Image (Overlay Layer) */}
+            {/* We clip this image from the top down based on scroll progress */}
+            <div 
+              className="absolute inset-0 w-full h-full"
               style={{
-                transform: `translateY(-${scrollProgress * 50}%)`,
+                // inset(top right bottom left)
+                // 100% hidden at start, 0% hidden at end
+                clipPath: `inset(${100 - (scrollProgress * 100)}% 0 0 0)`
               }}
             >
               <img
-                src={beforeImage}
-                alt="Before"
-                className="w-full h-1/2 object-cover"
-              />
-              <img
                 src={afterImage}
                 alt="After"
-                className="w-full h-1/2 object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
-            
-            {/* Progress indicator */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm font-medium z-10">
-              {scrollProgress < 0.5 ? "Before" : "After"} • {scrollProgress < 1 ? "Scroll to reveal" : "Complete!"}
+
+            {/* 3. Slider Line */}
+            <div 
+              className="absolute left-0 right-0 h-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-20 pointer-events-none"
+              style={{
+                bottom: `${scrollProgress * 100}%`
+              }}
+            >
+              {/* Optional: Center Handle Icon */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black/70">
+                   <path d="m7 15 5 5 5-5"/>
+                   <path d="m7 9 5-5 5 5"/>
+                </svg>
+              </div>
             </div>
-            
-            {/* Progress bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/20 z-10">
-              <div 
-                className="h-full bg-accent transition-all duration-100"
-                style={{ width: `${scrollProgress * 100}%` }}
-              />
+
+            {/* Labels */}
+            <div className="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider z-30">
+              Before
             </div>
+            <div className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider z-30">
+              After
+            </div>
+
           </div>
         </div>
 

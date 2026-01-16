@@ -37,7 +37,7 @@ const FreeTrial = () => {
             Start Your Free Trial
           </h1>
           <p className="text-center text-muted-foreground text-lg mb-12">
-            Upload your images and experience FrameState quality — no commitment.
+            We provide professional real estate photo editing services for real estate agencies and property marketing companies. To help agencies evaluate our quality, we offer a free trial. Interested companies can fill in the details below, and our team will review the request and contact you within 24 hours with further information.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">

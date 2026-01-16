@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
+import logo from "@/assets/logowhite.png"; // import your logo
 
 const Footer = () => {
   return (
-    <footer className="bg-footer text-footer-foreground py-16 px-6 lg:px-16">
+    <footer className="bg-footer text-footer-foreground py-10 px-6 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Logo & Description */}
-          <div>
-            <Link to="/" className="text-2xl font-bold text-white mb-4 block">
-              FrameState
+          <div className="flex flex-col items-start">
+            <Link to="/" className="mb-4 block">
+              <img src={logo} alt="Logo" className="h-10 w-auto" />
             </Link>
             <p className="text-gray-400 text-sm">
               Professional real estate photo editing services.
@@ -17,8 +18,8 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-accent font-semibold mb-4">Contact</h4>
-            <div className="space-y-2 text-sm text-gray-400">
+            <h4 className="text-accent font-semibold mb-2">Contact</h4>
+            <div className="space-y-1 text-sm text-gray-400">
               <p>Email: support@framestate.com</p>
               <p>Phone: +1 234 567 890</p>
               <p>Address: Your City, Country</p>
@@ -27,8 +28,8 @@ const Footer = () => {
 
           {/* Social Links */}
           <div>
-            <h4 className="text-accent font-semibold mb-4">Follow Us</h4>
-            <div className="flex flex-col gap-2">
+            <h4 className="text-accent font-semibold mb-2">Follow Us</h4>
+            <div className="flex flex-col gap-1">
               <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
                 Instagram
               </a>
@@ -43,8 +44,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-white/15 pt-6 text-center">
-          <p className="text-gray-500 text-sm">
+        <div className="border-t border-white/15 pt-4 text-center">
+          <p className="text-gray-500 text-xs">
             © 2026 FrameState. All rights reserved.
           </p>
         </div>
