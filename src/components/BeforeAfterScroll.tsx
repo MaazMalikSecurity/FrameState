@@ -18,7 +18,8 @@ const BeforeAfterScroll = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const accumulatedScrollRef = useRef(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const maxScroll = 400; // Pixels of scroll needed to complete transition
+  const [isLocked, setIsLocked] = useState(false);
+  const maxScroll = 400;
 
   const handleWheel = useCallback((e: WheelEvent) => {
     const container = containerRef.current;
@@ -26,45 +27,70 @@ const BeforeAfterScroll = ({
 
     const rect = container.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
+    const containerCenter = rect.top + rect.height / 2;
+    const viewportCenter = viewportHeight / 2;
     
-    // Check if component is in the viewport center area
-    const isInView = rect.top <= viewportHeight * 0.3 && rect.bottom >= viewportHeight * 0.7;
+    // Lock when container center is near viewport center
+    const distanceFromCenter = Math.abs(containerCenter - viewportCenter);
+    const isInCenter = distanceFromCenter < viewportHeight * 0.4;
     
-    // Get current progress
     const currentProgress = accumulatedScrollRef.current / maxScroll;
 
-    // Only intercept scroll if we're in view AND not complete yet
-    if (isInView && currentProgress < 1) {
+    // Lock scroll if in center and not complete
+    if (isInCenter && currentProgress < 1) {
       e.preventDefault();
       e.stopPropagation();
+      setIsLocked(true);
       
-      accumulatedScrollRef.current += e.deltaY;
-      
-      // Clamp values
-      if (accumulatedScrollRef.current < 0) accumulatedScrollRef.current = 0;
-      if (accumulatedScrollRef.current > maxScroll) accumulatedScrollRef.current = maxScroll;
+      // Only allow scrolling down (positive deltaY) to progress
+      if (e.deltaY > 0) {
+        accumulatedScrollRef.current += e.deltaY;
+        
+        if (accumulatedScrollRef.current > maxScroll) {
+          accumulatedScrollRef.current = maxScroll;
+        }
 
-      const newProgress = accumulatedScrollRef.current / maxScroll;
-      setScrollProgress(newProgress);
+        const newProgress = accumulatedScrollRef.current / maxScroll;
+        setScrollProgress(newProgress);
+        
+        // Release lock when complete
+        if (newProgress >= 1) {
+          setIsLocked(false);
+        }
+      }
+    } else if (currentProgress >= 1) {
+      setIsLocked(false);
     }
   }, []);
+
+  // Force scroll lock by preventing default on the document when locked
+  useEffect(() => {
+    if (isLocked) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isLocked]);
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, [handleWheel]);
 
-  // Reset accumulated scroll when scrolling back up to this section
+  // Reset when scrolling back up past this section
   useEffect(() => {
     const handleScroll = () => {
       const container = containerRef.current;
       if (!container) return;
       
       const rect = container.getBoundingClientRect();
-      // If we've scrolled past this section going up, reset
       if (rect.top > window.innerHeight) {
         accumulatedScrollRef.current = 0;
         setScrollProgress(0);
+        setIsLocked(false);
       }
     };
 
@@ -77,7 +103,7 @@ const BeforeAfterScroll = ({
       ref={containerRef}
       className="min-h-screen py-16 px-6 lg:px-16 flex items-center"
     >
-      <div className={`max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-16 ${
+      <div className={`max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-12 ${
         reversed ? "lg:flex-row-reverse" : ""
       }`}>
         {/* Before/After Image Container */}
@@ -116,12 +142,12 @@ const BeforeAfterScroll = ({
           </div>
         </div>
 
-        {/* Text Content */}
-        <div className="flex-1">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-4">
+        {/* Service Text Content */}
+        <div className="flex-1 text-center lg:text-left">
+          <h3 className="text-3xl lg:text-4xl font-bold text-primary mb-4">
             {title}
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-lg">
+          </h3>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
             {description}
           </p>
         </div>
