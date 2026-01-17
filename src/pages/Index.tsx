@@ -11,6 +11,39 @@ import before2 from "@/assets/before-2.jpg";
 import after2 from "@/assets/after-2.jpg";
 
 const Index = () => {
+  const services = [
+    {
+      title: "Photo Retouching / Enhancement",
+      description: "Our photo retouching and enhancement service improves the overall look of real estate images while keeping them natural and realistic. We adjust lighting, exposure, colors, contrast, and sharpness to ensure the property looks clear, balanced, and ready for professional listings.",
+      beforeImage: before1,
+      afterImage: after1,
+    },
+    {
+      title: "HDR Photo Blending",
+      description: "HDR photo blending combines multiple exposures into a single well-balanced image. This process ensures bright interiors, clear windows, and properly exposed exteriors, resulting in images that closely match what the human eye sees on-site.",
+      beforeImage: before2,
+      afterImage: after2,
+    },
+    {
+      title: "Virtual Staging",
+      description: "Transform empty spaces into beautifully furnished rooms that help buyers envision their future home. Our virtual staging adds realistic furniture and decor to showcase the full potential of any property.",
+      beforeImage: before1,
+      afterImage: after1,
+    },
+    {
+      title: "Decluttering / Object Removal",
+      description: "Remove unwanted objects, clutter, and distractions from your property photos. We seamlessly eliminate items like personal belongings, wires, trash cans, and other elements that detract from the property's appeal.",
+      beforeImage: before2,
+      afterImage: after2,
+    },
+    {
+      title: "Twilight Conversion",
+      description: "Convert daytime photos into stunning twilight images that create a warm, inviting atmosphere. Our twilight conversion adds dramatic skies and enhanced lighting to make properties stand out in listings.",
+      beforeImage: before1,
+      afterImage: after1,
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -40,9 +73,9 @@ const Index = () => {
       </section>
 
       {/* Services Showcase with Scroll-Lock Before/After */}
-      <section className="bg-secondary py-8">
-        <div className="text-center mb-8 pt-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+      <section className="bg-secondary py-6">
+        <div className="text-center mb-2 pt-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-[#f26b2c]">
             How We Enhance Your Listings
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto px-6">
@@ -50,20 +83,16 @@ const Index = () => {
           </p>
         </div>
 
-        <BeforeAfterScroll
-          beforeImage={before1}
-          afterImage={after1}
-          title="Photo Retouching / Enhancement"
-          description="Our photo retouching and enhancement service improves the overall look of real estate images while keeping them natural and realistic. We adjust lighting, exposure, colors, contrast, and sharpness to ensure the property looks clear, balanced, and ready for professional listings."
-        />
-
-        <BeforeAfterScroll
-          beforeImage={before2}
-          afterImage={after2}
-          title="Day to Dusk / Twilight"
-          description="HDR photo blending combines multiple exposures into a single well-balanced image. This process ensures bright interiors, clear windows, and properly exposed exteriors, resulting in images that closely match what the human eye sees on-site."
-          reversed
-        />
+        {services.map((service, index) => (
+          <BeforeAfterScroll
+            key={index}
+            beforeImage={service.beforeImage}
+            afterImage={service.afterImage}
+            title={service.title}
+            description={service.description}
+            reversed={index % 2 !== 0}
+          />
+        ))}
       </section>
 
       {/* CTA Section */}

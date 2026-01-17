@@ -13,29 +13,33 @@ const services = [
 const Navbar = () => {
   const location = useLocation();
 
+  const linkBase =
+    "text-sm font-medium transition-colors hover:text-[#f26b2c]";
+  const active = "text-[#f26b2c]";
+  const inactive = "text-foreground";
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <div className="flex justify-between items-center h-20">
+      {/* Slightly reduced left padding */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="flex items-center h-14">
           
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          {/* Logo — nudged left */}
+          <Link to="/" className="flex items-center">
             <img
               src={logo}
               alt="FrameState Logo"
-              className="h-8 md:h-10 w-auto transition-opacity hover:opacity-80"
+              className="h-7 md:h-8 w-auto transition-opacity hover:opacity-80"
             />
           </Link>
 
-          {/* Navigation Links */}
-          <ul className="hidden md:flex items-center gap-8">
+          {/* Navigation Links — nudged right */}
+          <ul className="hidden md:flex items-center gap-8 ml-auto pl-16">
             <li>
               <Link
                 to="/"
-                className={`font-medium transition-colors hover:text-primary ${
-                  location.pathname === "/"
-                    ? "text-primary"
-                    : "text-foreground"
+                className={`${linkBase} ${
+                  location.pathname === "/" ? active : inactive
                 }`}
               >
                 Home
@@ -46,10 +50,10 @@ const Navbar = () => {
             <li className="relative group">
               <Link
                 to="/services"
-                className={`font-medium transition-colors hover:text-primary flex items-center gap-1 ${
+                className={`${linkBase} flex items-center gap-1 ${
                   location.pathname.includes("/services")
-                    ? "text-primary"
-                    : "text-foreground"
+                    ? active
+                    : inactive
                 }`}
               >
                 Services
@@ -61,7 +65,7 @@ const Navbar = () => {
                   <li key={service.href}>
                     <Link
                       to={service.href}
-                      className="block px-4 py-3 text-sm text-foreground hover:bg-secondary hover:text-primary transition-colors"
+                      className="block px-4 py-2 text-sm transition-colors text-foreground hover:bg-[#f26b2c] hover:text-white"
                     >
                       {service.name}
                     </Link>
@@ -73,10 +77,10 @@ const Navbar = () => {
             <li>
               <Link
                 to="/free-trial"
-                className={`font-medium transition-colors hover:text-primary ${
+                className={`${linkBase} ${
                   location.pathname === "/free-trial"
-                    ? "text-primary"
-                    : "text-foreground"
+                    ? active
+                    : inactive
                 }`}
               >
                 Free Trial
@@ -86,10 +90,10 @@ const Navbar = () => {
             <li>
               <Link
                 to="/contact"
-                className={`font-medium transition-colors hover:text-primary ${
+                className={`${linkBase} ${
                   location.pathname === "/contact"
-                    ? "text-primary"
-                    : "text-foreground"
+                    ? active
+                    : inactive
                 }`}
               >
                 Contact

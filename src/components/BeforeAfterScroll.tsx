@@ -122,14 +122,14 @@ const BeforeAfterScroll = ({
   return (
     <div
       ref={containerRef}
-      className="min-h-screen py-16 px-6 lg:px-16 flex items-center"
+      className="min-h-[85vh] py-10 px-6 lg:px-16 flex items-center"
     >
-      <div className={`max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-12 ${
+      <div className={`max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-8 ${
         reversed ? "lg:flex-row-reverse" : ""
       }`}>
         {/* Before/After Image Container */}
         <div className="flex-1 w-full max-w-xl">
-          <div className="relative h-[350px] lg:h-[400px] rounded-xl overflow-hidden shadow-2xl bg-gray-100">
+          <div className="relative h-[320px] lg:h-[380px] rounded-xl overflow-hidden shadow-2xl bg-gray-100">
             
             {/* 1. BEFORE Image (Base Layer) */}
             <img
