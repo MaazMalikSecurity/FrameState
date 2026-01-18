@@ -178,8 +178,8 @@ const Services = () => {
         <div className="min-h-screen">
           <Navbar />
           <section className="pt-32 pb-20 px-6 lg:px-16 text-center">
-            <h2 className="text-3xl font-bold text-primary">Service Not Found</h2>
-            <Link to="/services" className="text-blue-600 underline mt-4 inline-block">
+            <h2 className="text-3xl font-bold text-[#1e40af] dark:text-[#f26b2c]">Service Not Found</h2>
+            <Link to="/services" className="text-blue-600 dark:text-blue-400 underline mt-4 inline-block">
               Back to Services
             </Link>
           </section>
@@ -195,7 +195,7 @@ const Services = () => {
         {/* Service Header */}
         <section className="bg-secondary pt-24 pb-8">
           <div className="max-w-7xl mx-auto px-6 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-4">
               {service.name}
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -207,15 +207,14 @@ const Services = () => {
         {/* Service Examples with Before/After Scroll */}
         <section className="bg-secondary">
           {service.examples.map((example, index) => (
-            <div key={index}>
-              <BeforeAfterScroll
-                beforeImage={example.beforeImage}
-                afterImage={example.afterImage}
-                title={example.title}
-                description={example.description}
-                reversed={index % 2 !== 0}
-              />
-            </div>
+            <BeforeAfterScroll
+              key={index}
+              beforeImage={example.beforeImage}
+              afterImage={example.afterImage}
+              title={example.title}
+              description={example.description}
+              reversed={index % 2 !== 0}
+            />
           ))}
         </section>
 
@@ -230,7 +229,7 @@ const Services = () => {
       <Navbar />
       <section className="bg-secondary py-12">
         <div className="text-center mb-8 pt-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#f26b2c]">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
             Our Services
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto px-6">
