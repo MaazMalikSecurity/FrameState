@@ -21,19 +21,50 @@ const BeforeAfterScroll = ({
 }: BeforeAfterScrollProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const accumulatedScrollRef = useRef(0);
+  const lastScrollYRef = useRef(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
-  const isSnapingRef = useRef(false);
   const maxScroll = 400;
   const navbarHeight = 80;
+
+  // Check if component is in the center lock zone
+  const isInCenterZone = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return false;
+
+    const rect = container.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const availableHeight = viewportHeight - navbarHeight;
+    const visualCenter = navbarHeight + availableHeight / 2;
+    const containerCenter = rect.top + rect.height / 2;
+    const distanceFromCenter = Math.abs(containerCenter - visualCenter);
+    
+    // Smaller zone to reduce jumpiness
+    return distanceFromCenter < availableHeight * 0.15;
+  }, [navbarHeight]);
+
+  // Scroll container to center of viewport
+  const scrollToCenter = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const availableHeight = viewportHeight - navbarHeight;
+    const visualCenter = navbarHeight + availableHeight / 2;
+    const containerCenter = rect.top + rect.height / 2;
+    const scrollOffset = containerCenter - visualCenter;
+    
+    window.scrollBy({ top: scrollOffset, behavior: 'instant' });
+  }, [navbarHeight]);
 
   // Detect mobile on mount and resize
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+      setIsMobile(window.innerWidth < 1024);
     };
     
     checkMobile();
@@ -42,63 +73,125 @@ const BeforeAfterScroll = ({
   }, []);
 
   const handleWheel = useCallback((e: WheelEvent) => {
-    if (isMobile) return; // Skip wheel handling on mobile
+    if (isMobile) return;
     
     const container = containerRef.current;
-    if (!container || isSnapingRef.current) return;
+    if (!container) return;
 
-    const rect = container.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    
-    const availableHeight = viewportHeight - navbarHeight;
-    const visualCenter = navbarHeight + availableHeight / 2;
-    const containerCenter = rect.top + rect.height / 2;
-    
-    const distanceFromCenter = Math.abs(containerCenter - visualCenter);
-    const isInCenter = distanceFromCenter < availableHeight * 0.2;
-    
+    const inCenterZone = isInCenterZone();
     const currentProgress = accumulatedScrollRef.current / maxScroll;
 
-    if (currentProgress <= 0 && e.deltaY < 0) {
-      setIsLocked(false);
-      accumulatedScrollRef.current = 0;
-      setScrollProgress(0);
-      return;
-    }
-    
-    if (currentProgress >= 1 && e.deltaY > 0) {
-      setIsLocked(false);
-      accumulatedScrollRef.current = maxScroll;
-      setScrollProgress(1);
-      return;
-    }
+    // Should we be locked?
+    const shouldBeLocked = inCenterZone || isLocked;
 
-    if (isInCenter) {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsLocked(true);
-      
-      if (distanceFromCenter > 20 && !isSnapingRef.current) {
-        isSnapingRef.current = true;
-        const scrollOffset = containerCenter - visualCenter;
-        window.scrollBy({ top: scrollOffset, behavior: 'smooth' });
-        
-        setTimeout(() => {
-          isSnapingRef.current = false;
-        }, 300);
+    if (shouldBeLocked) {
+      // Check escape conditions
+      if (currentProgress <= 0 && e.deltaY < 0) {
+        setIsLocked(false);
+        return;
       }
       
+      if (currentProgress >= 1 && e.deltaY > 0) {
+        setIsLocked(false);
+        return;
+      }
+
+      // Lock and prevent scroll
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Center the component when first locking
+      if (!isLocked) {
+        scrollToCenter();
+      }
+      setIsLocked(true);
+      
+      // Accumulate scroll delta
       accumulatedScrollRef.current += e.deltaY;
-      accumulatedScrollRef.current = Math.max(0, Math.min(maxScroll, accumulatedScrollRef.current));
+      
+      // Clamp between 0 and maxScroll
+      if (accumulatedScrollRef.current < 0) accumulatedScrollRef.current = 0;
+      if (accumulatedScrollRef.current > maxScroll) accumulatedScrollRef.current = maxScroll;
 
       const newProgress = accumulatedScrollRef.current / maxScroll;
       setScrollProgress(newProgress);
     } else {
-      if (isLocked && distanceFromCenter > availableHeight * 0.25) {
+      setIsLocked(false);
+    }
+  }, [navbarHeight, isMobile, isLocked, isInCenterZone, scrollToCenter]);
+
+  // Proactive scroll prevention - lock BEFORE wheel events when entering zone
+  useEffect(() => {
+    if (isMobile) return;
+
+    const checkAndLockOnScroll = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollYRef.current;
+      lastScrollYRef.current = currentScrollY;
+
+      const inCenterZone = isInCenterZone();
+      const currentProgress = accumulatedScrollRef.current / maxScroll;
+
+      // If we're in center zone and not at escape boundaries, lock
+      if (inCenterZone) {
+        const canEscapeUp = currentProgress <= 0 && !scrollingDown;
+        const canEscapeDown = currentProgress >= 1 && scrollingDown;
+        
+        if (!canEscapeUp && !canEscapeDown) {
+          setIsLocked(true);
+        }
+      }
+
+      // Only reset when scrolling UP past the section (section is below viewport)
+      const rect = container.getBoundingClientRect();
+      if (rect.top > window.innerHeight) {
+        accumulatedScrollRef.current = 0;
+        setScrollProgress(0);
         setIsLocked(false);
       }
-    }
-  }, [navbarHeight, isMobile, isLocked]);
+    };
+
+    window.addEventListener("scroll", checkAndLockOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", checkAndLockOnScroll);
+  }, [isMobile, isInCenterZone]);
+
+  // Prevent page scroll when locked - use wheel event with capture
+  useEffect(() => {
+    if (isMobile) return;
+
+    const preventPageScroll = (e: WheelEvent) => {
+      if (isLocked) {
+        const currentProgress = accumulatedScrollRef.current / maxScroll;
+        
+        // Only prevent if not at escape boundaries
+        const canEscapeUp = currentProgress <= 0 && e.deltaY < 0;
+        const canEscapeDown = currentProgress >= 1 && e.deltaY > 0;
+        
+        if (!canEscapeUp && !canEscapeDown) {
+          e.preventDefault();
+        }
+      }
+    };
+
+    // Use capture phase to intercept before regular handlers
+    window.addEventListener('wheel', preventPageScroll, { passive: false, capture: true });
+    
+    return () => {
+      window.removeEventListener('wheel', preventPageScroll, { capture: true });
+    };
+  }, [isLocked, isMobile]);
+
+  // Main wheel handler
+  useEffect(() => {
+    if (isMobile) return;
+    
+    const wheelListener = (e: WheelEvent) => handleWheel(e);
+    window.addEventListener("wheel", wheelListener, { passive: false });
+    return () => window.removeEventListener("wheel", wheelListener);
+  }, [handleWheel, isMobile]);
 
   // Mobile slider handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -138,33 +231,6 @@ const BeforeAfterScroll = ({
   };
 
   useEffect(() => {
-    if (isMobile) return;
-    
-    const wheelListener = (e: WheelEvent) => handleWheel(e);
-    window.addEventListener("wheel", wheelListener, { passive: false });
-    return () => window.removeEventListener("wheel", wheelListener);
-  }, [handleWheel, isMobile]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = containerRef.current;
-      if (!container || isMobile || isSnapingRef.current) return;
-      
-      const rect = container.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      
-      if (rect.bottom < 0 || rect.top > viewportHeight) {
-        accumulatedScrollRef.current = 0;
-        setScrollProgress(0);
-        setIsLocked(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
-
-  useEffect(() => {
     if (isMobile) {
       document.addEventListener('mouseup', handleMouseUp);
       document.addEventListener('touchend', handleMouseUp);
@@ -180,13 +246,26 @@ const BeforeAfterScroll = ({
       ref={containerRef}
       className="min-h-[85vh] py-10 px-6 lg:px-12 xl:px-16 2xl:px-20 flex items-center"
     >
-      <div className={`max-w-[90rem] mx-auto w-full flex flex-col lg:flex-row items-center gap-8 lg:gap-12 xl:gap-16 ${
+      {/* LAYOUT UPDATES:
+         1. max-w-[100rem] keeps the container wide.
+         2. gap-6 lg:gap-8 (Reduced from gap-12/16) brings text closer.
+      */}
+      <div className={`max-w-[100rem] mx-auto w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-8 xl:gap-12 ${
         reversed ? "lg:flex-row-reverse" : ""
       }`}>
-        {/* Before/After Image Container */}
-        <div className="flex-1 w-full">
+        
+        {/* IMAGE CONTAINER:
+           1. Removed flex-1.
+           2. Added lg:w-[58%] to give it ~60% of the width (increasing width relative to text).
+        */}
+        <div className={`w-full lg:w-[55%] ${reversed ? 'lg:ml-0' : 'lg:mr-0'}`}>
+          
+          {/* IMAGE HEIGHTS:
+             Adjusted to be "less tall" than previous version but still rectangular.
+             Mobile: 280px | Desktop: 380px -> 520px
+          */}
           <div 
-            className="relative h-[320px] lg:h-[400px] xl:h-[480px] 2xl:h-[550px] rounded-xl overflow-hidden shadow-2xl bg-gray-100 select-none"
+            className="relative h-[280px] lg:h-[300px] xl:h-[400px] 2xl:h-[450px] rounded-xl overflow-hidden shadow-2xl bg-gray-100 select-none"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onTouchStart={handleTouchStart}
@@ -276,8 +355,11 @@ const BeforeAfterScroll = ({
           </div>
         </div>
 
-        {/* Service Text Content */}
-        <div className="flex-1 text-center lg:text-left">
+        {/* TEXT CONTAINER:
+           1. Removed flex-1.
+           2. Added lg:w-[42%] to reduce the space it takes.
+        */}
+        <div className="w-full lg:w-[50%] text-center lg:text-left">
           <h3 className="text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-3 lg:mb-4 xl:mb-6">
             {title}
           </h3>

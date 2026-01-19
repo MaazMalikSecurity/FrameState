@@ -35,7 +35,11 @@ const Navbar = () => {
         darkMode ? "bg-footer border-none" : "bg-white/95 border-b border-border"
       }`}
     >
-      <div className="max-w-[90rem] mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 2xl:px-10">
+      {/* UPDATED: Removed max-w-[90rem] and mx-auto. 
+         Added w-full. 
+         Increased desktop padding (lg:px-8 xl:px-12) for better spacing on wide screens.
+      */}
+      <div className="w-full px-3 sm:px-4 lg:px-8 xl:px-12 2xl:px-16">
         <div className="flex items-center justify-between h-12 lg:h-14">
           {/* Logo */}
           <Link to="/" className="flex items-center flex-shrink-0" onClick={closeMobileMenu}>
@@ -47,7 +51,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10 ml-auto pl-10 xl:pl-16">
+          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10 ml-auto">
             <li>
               <Link
                 to="/"

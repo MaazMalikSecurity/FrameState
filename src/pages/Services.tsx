@@ -1,221 +1,323 @@
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import BeforeAfterScroll from "@/components/BeforeAfterScroll";
+import { ChevronLeft, ChevronRight, Check, MoveHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import before1 from "@/assets/before-1.jpg";
 import after1 from "@/assets/after-1.jpg";
 import before2 from "@/assets/before-2.jpg";
 import after2 from "@/assets/after-2.jpg";
 
+// --- Data Structure ---
 const servicesData = [
   {
     id: "photo-retouching",
-    name: "Photo Retouching / Enhancement",
-    description: "Professional color correction, exposure adjustment, and image enhancement.",
+    name: "Photo Retouching & Enhancement",
+    tagline: "Professional image correction to make every photo clean, bright, and listing-ready.",
+    features: [
+      "Exposure, brightness & contrast correction",
+      "Color correction & accurate white balance",
+      "Image sharpening & noise reduction",
+      "Vertical & horizontal perspective correction",
+      "Window light balancing",
+      "Lens distortion & reflection removal",
+      "Minor surface touch-ups (walls, ceilings, floors)",
+      "Adding realistic fire to fireplaces",
+      "TV screen replacement with realistic content"
+    ],
     examples: [
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Brightness & Exposure Correction",
-        description: "Adjusting lighting levels to bring out the best in dim or overexposed areas, ensuring every corner of the room looks inviting and well-lit."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Color Balance Enhancement",
-        description: "Fine-tuning color tones to eliminate unwanted color casts and create natural, appealing hues that accurately represent the property."
-      },
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Sharpness & Detail Enhancement",
-        description: "Enhancing image clarity and sharpness to highlight architectural details, textures, and finishes that make the property stand out."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Contrast Optimization",
-        description: "Balancing shadows and highlights to create depth and dimension, making spaces feel more vibrant and three-dimensional."
-      }
+      { before: before1, after: after1, label: "Brightness & Exposure" },
+      { before: before2, after: after2, label: "Color Balance" },
+      { before: before1, after: after1, label: "Sharpening" },
     ]
   },
   {
     id: "hdr-blending",
     name: "HDR Photo Blending",
-    description: "Combine multiple exposures for perfectly balanced interior and exterior shots.",
+    tagline: "Seamless blending of multiple exposures for perfectly balanced lighting.",
+    features: [
+      "Blending of 3–7 bracketed images",
+      "Balanced interior and exterior exposure",
+      "Highlight & shadow recovery",
+      "Clear and natural window views",
+      "Consistent lighting across rooms",
+      "Realistic contrast and depth",
+      "Natural tones without over-processing"
+    ],
     examples: [
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Window View Recovery",
-        description: "Perfectly exposing both interior spaces and exterior views through windows, eliminating blown-out windows while maintaining interior brightness."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Multi-Exposure Blending",
-        description: "Combining multiple bracketed exposures to capture the full dynamic range of a scene, from the darkest shadows to the brightest highlights."
-      },
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Interior-Exterior Balance",
-        description: "Creating seamless transitions between indoor and outdoor spaces, showcasing patios, gardens, and views without sacrificing interior detail."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Natural Light Preservation",
-        description: "Maintaining the authentic look of natural lighting while ensuring all areas are properly exposed and visually appealing."
-      }
+      { before: before2, after: after2, label: "Window View Recovery" },
+      { before: before1, after: after1, label: "Interior-Exterior Balance" },
     ]
   },
   {
     id: "virtual-staging",
     name: "Virtual Staging",
-    description: "Digitally furnish empty rooms to help buyers visualize the space.",
+    tagline: "Transform empty or outdated spaces into beautifully furnished homes.",
+    features: [
+      "Realistic furniture placement & décor",
+      "Multiple design styles (modern, luxury, minimal, etc.)",
+      "Accurate scaling & room perspective",
+      "Natural lighting, shadows & reflections",
+      "Rugs, wall art, lamps, plants & accessories",
+      "Lifestyle-based staging (family, luxury, rental)",
+      "Empty room to fully furnished transformation"
+    ],
     examples: [
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Living Room Staging",
-        description: "Transform empty living spaces into warm, inviting rooms with stylish furniture and decor that help buyers envision their future home."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Bedroom Furnishing",
-        description: "Add beds, nightstands, and tasteful accessories to create cozy, functional bedroom spaces that appeal to potential buyers."
-      },
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Dining Area Setup",
-        description: "Digitally furnish dining areas with elegant tables, chairs, and centerpieces to showcase the entertaining potential of the space."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Home Office Creation",
-        description: "Convert empty rooms into productive home office spaces with desks, shelving, and professional decor to highlight versatile room usage."
-      }
+      { before: before1, after: after1, label: "Living Room Staging" },
+      { before: before2, after: after2, label: "Bedroom Furnishing" },
     ]
   },
   {
     id: "decluttering",
-    name: "Decluttering / Object Removal",
-    description: "Remove unwanted objects and distractions for a clean presentation.",
+    name: "Decluttering & Object Removal",
+    tagline: "Digitally clean and organize spaces to highlight the property’s best features.",
+    features: [
+      "Removal of personal items (clothes, photos, toys)",
+      "Removal of clutter, cables & small objects",
+      "Removal of unwanted furniture or décor",
+      "Wall marks, stains & imperfections removal",
+      "Removal of people, pets & vehicles",
+      "Outdoor cleanup (bins, tools, yard clutter)",
+      "Clean, distraction-free presentation"
+    ],
     examples: [
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Personal Items Removal",
-        description: "Seamlessly remove personal belongings, family photos, and clutter to create a neutral, market-ready presentation."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Utility Object Cleanup",
-        description: "Eliminate distracting elements like trash cans, electrical outlets, power lines, and utility boxes for a cleaner appearance."
-      },
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Lawn & Exterior Cleanup",
-        description: "Remove lawn equipment, hoses, and outdoor clutter to present a pristine exterior that enhances curb appeal."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Reflection & Shadow Removal",
-        description: "Clean up unwanted reflections in mirrors and windows, and remove photographer shadows for professional results."
-      }
+      { before: before1, after: after1, label: "Clutter Removal" },
+      { before: before2, after: after2, label: "Object Cleanup" },
     ]
   },
   {
     id: "twilight",
     name: "Twilight Conversion",
-    description: "Transform daytime photos into stunning twilight/dusk shots.",
+    tagline: "Create stunning dusk images that elevate the property’s visual appeal.",
+    features: [
+      "Day-to-dusk sky replacement",
+      "Warm interior lighting enhancement",
+      "Exterior light activation",
+      "Window glow & reflections",
+      "Natural shadows & premium evening tones",
+      "High-end, luxury twilight finish"
+    ],
     examples: [
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Exterior Twilight Magic",
-        description: "Transform daytime exterior shots into stunning twilight scenes with warm interior lighting and dramatic skies."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Landscape Lighting Enhancement",
-        description: "Add beautiful landscape and pathway lighting to highlight outdoor features and create an inviting evening atmosphere."
-      },
-      {
-        beforeImage: before1,
-        afterImage: after1,
-        title: "Pool & Water Feature Glow",
-        description: "Illuminate pools and water features with realistic underwater and surrounding lighting for a luxurious twilight effect."
-      },
-      {
-        beforeImage: before2,
-        afterImage: after2,
-        title: "Architectural Accent Lighting",
-        description: "Enhance architectural features with strategic accent lighting that showcases the property's unique design elements at dusk."
-      }
+      { before: before1, after: after1, label: "Day to Dusk" },
+      { before: before2, after: after2, label: "Exterior Lighting" },
     ]
   }
 ];
 
+// --- Internal Component: Comparison Slide ---
+const ComparisonSlide = ({ before, after, label }) => {
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const containerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleMove = useCallback((clientX) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+      const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+      setSliderPosition(percent);
+    }
+  }, []);
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    handleMove(e.clientX);
+  };
+
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    handleMove(e.touches[0].clientX);
+  };
+
+  useEffect(() => {
+    const handleMouseUp = () => setIsDragging(false);
+    const handleMouseMove = (e) => {
+      if (isDragging) handleMove(e.clientX);
+    };
+    const handleTouchMove = (e) => {
+      if (isDragging) handleMove(e.touches[0].clientX);
+    };
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchend', handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleMouseUp);
+    };
+  }, [isDragging, handleMove]);
+
+  return (
+    <div className="w-full h-full relative group cursor-ew-resize select-none overflow-hidden rounded-xl bg-gray-100"
+         ref={containerRef}
+         onMouseDown={handleMouseDown}
+         onTouchStart={handleTouchStart}
+    >
+      <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+      <div className="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 rounded text-xs font-bold z-10 pointer-events-none">BEFORE</div>
+
+      <div 
+        className="absolute inset-0 w-full h-full overflow-hidden"
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+      >
+        <img src={after} alt="After" className="absolute inset-0 w-full h-full object-cover max-w-none" style={{ width: '100%', height: '100%' }} draggable={false} />
+      </div>
+      <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded text-xs font-bold z-10 pointer-events-none">AFTER</div>
+
+      <div 
+        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+        style={{ left: `${sliderPosition}%` }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg text-primary">
+          <MoveHorizontal size={18} />
+        </div>
+      </div>
+      
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium z-10 pointer-events-none whitespace-nowrap">
+        {label}
+      </div>
+    </div>
+  );
+};
+
+// --- Main Services Component ---
 const Services = () => {
   const { serviceId } = useParams();
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // If a serviceId exists in the URL, show the single service page with before/after scrolls
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [serviceId]);
+
   if (serviceId) {
     const service = servicesData.find((s) => s.id === serviceId);
 
     if (!service) {
       return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-secondary">
           <Navbar />
           <section className="pt-32 pb-20 px-6 lg:px-16 text-center">
-            <h2 className="text-3xl font-bold text-[#1e40af] dark:text-[#f26b2c]">Service Not Found</h2>
-            <Link to="/services" className="text-blue-600 dark:text-blue-400 underline mt-4 inline-block">
-              Back to Services
-            </Link>
+            <h2 className="text-3xl font-bold text-red-500">Service Not Found</h2>
+            <Link to="/services" className="text-blue-600 underline mt-4 inline-block">Back to Services</Link>
           </section>
           <Footer />
         </div>
       );
     }
 
+    const nextSlide = () => {
+      setCurrentSlide((prev) => (prev + 1) % service.examples.length);
+    };
+
+    const prevSlide = () => {
+      setCurrentSlide((prev) => (prev - 1 + service.examples.length) % service.examples.length);
+    };
+
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-secondary transition-colors duration-300">
         <Navbar />
         
-        {/* Service Header */}
-        <section className="bg-secondary pt-24 pb-8">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-4">
-              {service.name}
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Scroll through each example to see the transformation
-            </p>
+        {/* 1. Header & Description Section */}
+        <section className="min-h-[60vh] flex items-center pt-32 pb-16 px-6 lg:px-12 xl:px-20 max-w-[90rem] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
+            
+            {/* Left: Heading & Main Description */}
+            <div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-6 leading-tight">
+                {service.name}
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                {service.tagline}
+              </p>
+              <div className="mt-8 flex gap-4">
+                 <Button className="bg-[#f26b2c] hover:bg-[#f26b2c]/90 text-white" size="lg" asChild>
+                    <Link to="/free-trial">Start Free Trial</Link>
+                 </Button>
+              </div>
+            </div>
+
+            {/* Right: "Includes" List */}
+            <div className="bg-white/50 dark:bg-footer/50 rounded-2xl p-6 lg:p-8 border border-border/50 shadow-sm backdrop-blur-sm">
+              <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                What's Included
+              </h3>
+              <ul className="space-y-3">
+                {service.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-sm md:text-base text-muted-foreground">
+                    <div className="mt-1 min-w-4 min-h-4 w-4 h-4 rounded-full bg-green-500/10 flex items-center justify-center">
+                      <Check size={10} className="text-green-600" />
+                    </div>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
-        {/* Service Examples with Before/After Scroll */}
-        <section className="bg-secondary">
-          {service.examples.map((example, index) => (
-            <BeforeAfterScroll
-              key={index}
-              beforeImage={example.beforeImage}
-              afterImage={example.afterImage}
-              title={example.title}
-              description={example.description}
-              reversed={index % 2 !== 0}
-            />
-          ))}
+        {/* 2. Slideshow Section - RESTORED BACKGROUND HERE */}
+        {/* bg-white dark:bg-footer/30 adds that distinct section look you liked */}
+        <section className="py-10 pb-20 px-4 sm:px-6 lg:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
+          <div className="max-w-6xl mx-auto text-center mb-8 pt-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
+              See the Difference
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              Drag the slider to compare before and after results
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto relative group">
+            
+            <div className="relative aspect-[4/3] md:aspect-[16/9] lg:aspect-[2/1] w-full bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-gray-800">
+               <ComparisonSlide 
+                  before={service.examples[currentSlide].before}
+                  after={service.examples[currentSlide].after}
+                  label={service.examples[currentSlide].label}
+                  key={currentSlide}
+               />
+
+              {/* Navigation Arrows */}
+              <button 
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
+                aria-label="Previous example"
+              >
+                <ChevronLeft size={24} />
+              </button>
+
+              <button 
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
+                aria-label="Next example"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-6">
+              {service.examples.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    currentSlide === idx ? "w-8 bg-[#f26b2c]" : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+          </div>
         </section>
 
         <Footer />
@@ -223,11 +325,11 @@ const Services = () => {
     );
   }
 
-  // Otherwise show the services grid
+  // --- Main Services Grid ---
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-secondary transition-colors duration-300">
       <Navbar />
-      <section className="bg-secondary py-12">
+      <section className="py-12">
         <div className="text-center mb-8 pt-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
             Our Services
@@ -245,13 +347,13 @@ const Services = () => {
               className="relative w-full max-w-[23.5rem] h-44 sm:h-50 md:h-56 flex flex-col justify-end p-5 bg-cover bg-center rounded-xl shadow-lg text-white transition-transform hover:scale-105"
               style={{ backgroundImage: `url(${after1})` }}
             >
-              <div className="absolute inset-0 bg-black/40 rounded-xl"></div>
+              <div className="absolute inset-0 bg-black/40 rounded-xl transition-colors hover:bg-black/50"></div>
               <div className="relative z-10">
                 <h3 className="text-lg md:text-xl font-bold mb-1">
                   {service.name}
                 </h3>
-                <p className="text-sm md:text-base text-white/90">
-                  {service.description}
+                <p className="text-sm md:text-base text-white/90 line-clamp-2">
+                  {service.tagline}
                 </p>
               </div>
             </Link>
