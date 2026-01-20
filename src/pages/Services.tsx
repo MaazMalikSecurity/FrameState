@@ -42,7 +42,7 @@ import decluttering3B from "@/assets/Decluttering/3B.jpg";
 import decluttering4A from "@/assets/Decluttering/4A.jpg";
 import decluttering4B from "@/assets/Decluttering/4B.jpg";
 import decluttering5A from "@/assets/Decluttering/5A.jpg";
-import decluttering5B from "@/assets/Decluttering/5B.jpeg";
+import decluttering5B from "@/assets/Decluttering/5B.jpg";
 import decluttering6A from "@/assets/Decluttering/6A.jpg";
 import decluttering6B from "@/assets/Decluttering/6B.jpg";
 
