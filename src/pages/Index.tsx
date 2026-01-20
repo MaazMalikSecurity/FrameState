@@ -7,10 +7,17 @@ import BeforeAfterScroll from "@/components/BeforeAfterScroll";
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
-import before1 from "@/assets/before-1.jpg";
-import after1 from "@/assets/after-1.jpg";
-import before2 from "@/assets/before-2.jpg";
-import after2 from "@/assets/after-2.jpg";
+// Import 1A (before) and 1B (after) for each service
+import retouching1A from "@/assets/Retouching/1A.jpg";
+import retouching1B from "@/assets/Retouching/1B.jpg";
+import hdr1A from "@/assets/HDR/1A.jpg";
+import hdr1B from "@/assets/HDR/1B.jpg";
+import virtualStaging1A from "@/assets/Virtual Staging/1A.jpg";
+import virtualStaging1B from "@/assets/Virtual Staging/1B.jpg";
+import decluttering1A from "@/assets/Decluttering/1A.jpg";
+import decluttering1B from "@/assets/Decluttering/1B.jpg";
+import twilight1A from "@/assets/Twilight/1A.jpg";
+import twilight1B from "@/assets/Twilight/1B.jpg";
 
 const Index = () => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
@@ -29,36 +36,36 @@ const Index = () => {
       id: "photo-retouching",
       title: "Photo Retouching / Enhancement",
       description: "Our photo retouching and enhancement service improves the overall look of real estate images while keeping them natural and realistic. We adjust lighting, exposure, colors, contrast, and sharpness to ensure the property looks clear, balanced, and ready for professional listings.",
-      beforeImage: before1,
-      afterImage: after1,
+      beforeImage: retouching1A,
+      afterImage: retouching1B,
     },
     {
       id: "hdr-blending",
       title: "HDR Photo Blending",
       description: "HDR photo blending combines multiple exposures into a single well-balanced image. This process ensures bright interiors, clear windows, and properly exposed exteriors, resulting in images that closely match what the human eye sees on-site.",
-      beforeImage: before2,
-      afterImage: after2,
+      beforeImage: hdr1A,
+      afterImage: hdr1B,
     },
     {
       id: "virtual-staging",
       title: "Virtual Staging",
       description: "Transform empty spaces into beautifully furnished rooms that help buyers envision their future home. Our virtual staging adds realistic furniture and decor to showcase the full potential of any property.",
-      beforeImage: before1,
-      afterImage: after1,
+      beforeImage: virtualStaging1A,
+      afterImage: virtualStaging1B,
     },
     {
       id: "decluttering",
       title: "Decluttering / Object Removal",
       description: "Remove unwanted objects, clutter, and distractions from your property photos. We seamlessly eliminate items like personal belongings, wires, trash cans, and other elements that detract from the property's appeal.",
-      beforeImage: before2,
-      afterImage: after2,
+      beforeImage: decluttering1A,
+      afterImage: decluttering1B,
     },
     {
       id: "twilight",
       title: "Twilight Conversion",
       description: "Convert daytime photos into stunning twilight images that create a warm, inviting atmosphere. Our twilight conversion adds dramatic skies and enhanced lighting to make properties stand out in listings.",
-      beforeImage: before1,
-      afterImage: after1,
+      beforeImage: twilight1A,
+      afterImage: twilight1B,
     },
   ];
 
@@ -70,21 +77,18 @@ const Index = () => {
       <section className="relative min-h-[100dvh] flex items-center justify-center pt-20">
         <HeroSlideshow />
         
-        {/* Main Content Wrapper - Centered Layout */}
-        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 py-20 flex flex-col items-center text-center">
-          <div className="max-w-4xl animate-fade-in mx-auto">
-            {/* UPDATED: Matches example size (3xl to 6xl) */}
+        {/* Main Content Wrapper - Left Aligned */}
+        <div className="relative z-10 w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 py-20">
+          <div className="max-w-4xl animate-fade-in">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               Professional Real Estate Photo Editing
             </h1>
             
-            {/* UPDATED: Matches example size (base to 2xl) */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-8 max-w-2xl">
               High-quality, fast, and affordable editing to make your listings stand out and sell faster.
             </p>
             
-            <div className="flex flex-wrap gap-4 justify-center">
-              {/* UPDATED: Used size="lg" and removed custom padding to match example dimensions */}
+            <div className="flex flex-wrap gap-4">
               <Button 
                 variant="hero" 
                 size="lg"
@@ -94,7 +98,6 @@ const Index = () => {
                 <Link to="/free-trial">Start Free Trial</Link>
               </Button>
               
-              {/* UPDATED: Used size="lg" and removed custom padding */}
               <Button 
                 variant="heroOutline" 
                 size="lg"
@@ -111,7 +114,6 @@ const Index = () => {
         {showScrollIndicator && (
           <div className="absolute bottom-2 left-0 right-0 z-10 flex justify-center animate-bounce">
             <div className="flex flex-col items-center gap-1 sm:gap-2">
-              {/* UPDATED: Text size to xs/sm */}
               <span className="text-white text-xs sm:text-sm font-medium whitespace-nowrap">Scroll Down</span>
               <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
@@ -122,11 +124,9 @@ const Index = () => {
       {/* Services Showcase */}
       <section className="bg-secondary py-12 md:py-20">
         <div className="text-center mb-8 md:mb-12 px-4">
-          {/* UPDATED: Header size (2xl to 4xl) */}
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
             How We Enhance Your Listings
           </h2>
-          {/* UPDATED: Description size (sm to lg) */}
           <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
             Scroll through each service to see the transformation
           </p>
@@ -148,16 +148,13 @@ const Index = () => {
       {/* CTA Section */}
       <section className="py-16 md:py-24 px-4 sm:px-6 bg-primary text-primary-foreground">
         <div className="max-w-5xl mx-auto text-center">
-          {/* UPDATED: Header size */}
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
             Ready to Transform Your Listings?
           </h2>
-          {/* UPDATED: Text size */}
           <p className="text-base sm:text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto">
             Try our professional photo editing services with no commitment. 
             See the difference quality editing makes.
           </p>
-          {/* UPDATED: Button size */}
           <Button 
             variant="hero" 
             size="lg" 

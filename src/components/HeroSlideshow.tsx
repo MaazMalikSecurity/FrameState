@@ -17,27 +17,19 @@ const HeroSlideshow = () => {
   }, []);
 
   return (
-    // FIXED: Added absolute inset-0 w-full h-full -z-10
-    // This forces the container to fill the parent section and sit behind the content
-    <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+    <div className="hero-slideshow">
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+          className={`hero-slide ${
             index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Ensure image covers the full area */}
-          <img 
-            src={slide} 
-            alt={`Real estate showcase ${index + 1}`} 
-            className="w-full h-full object-cover"
-          />
+          <img src={slide} alt={`Real estate showcase ${index + 1}`} />
         </div>
       ))}
-      
-      {/* Uniform dark overlay: 40% opacity black */}
-      <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none" />
+      {/* Dark overlay for text readability */}
+      <div className="hero-overlay" />
     </div>
   );
 };

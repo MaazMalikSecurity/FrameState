@@ -5,16 +5,76 @@ import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Check, MoveHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import before1 from "@/assets/before-1.jpg";
-import after1 from "@/assets/after-1.jpg";
-import before2 from "@/assets/before-2.jpg";
-import after2 from "@/assets/after-2.jpg";
+// --- NEW IMPORTS: Thumbnails (1A.jpg) ---
+import hdrThumb from "@/assets/HDR/1A.jpg";
+import retouchingThumb from "@/assets/Retouching/1B.jpg";
+import declutteringThumb from "@/assets/Decluttering/1B.jpg";
+import twilightThumb from "@/assets/Twilight/1B.jpg";
+import virtualStagingThumb from "@/assets/Virtual Staging/1B.jpg";
+
+// Import images from each service folder (2-6, A=before, B=after)
+import hdr2A from "@/assets/HDR/2A.jpg";
+import hdr2B from "@/assets/HDR/2B.jpg";
+import hdr3A from "@/assets/HDR/3A.jpg";
+import hdr3B from "@/assets/HDR/3B.jpg";
+import hdr4A from "@/assets/HDR/4A.jpg";
+import hdr4B from "@/assets/HDR/4B.jpg";
+import hdr5A from "@/assets/HDR/5A.jpg";
+import hdr5B from "@/assets/HDR/5B.jpg";
+import hdr6A from "@/assets/HDR/6A.jpg";
+import hdr6B from "@/assets/HDR/6B.jpg";
+
+import retouching2A from "@/assets/Retouching/2A.jpg";
+import retouching2B from "@/assets/Retouching/2B.jpg";
+import retouching3A from "@/assets/Retouching/3A.jpg";
+import retouching3B from "@/assets/Retouching/3B.jpg";
+import retouching4A from "@/assets/Retouching/4A.jpg";
+import retouching4B from "@/assets/Retouching/4B.jpg";
+import retouching5A from "@/assets/Retouching/5A.jpg";
+import retouching5B from "@/assets/Retouching/5B.jpg";
+import retouching6A from "@/assets/Retouching/6A.jpg";
+import retouching6B from "@/assets/Retouching/6B.jpg";
+
+import decluttering2A from "@/assets/Decluttering/2A.jpg";
+import decluttering2B from "@/assets/Decluttering/2B.jpg";
+import decluttering3A from "@/assets/Decluttering/3A.jpg";
+import decluttering3B from "@/assets/Decluttering/3B.jpg";
+import decluttering4A from "@/assets/Decluttering/4A.jpg";
+import decluttering4B from "@/assets/Decluttering/4B.jpg";
+import decluttering5A from "@/assets/Decluttering/5A.jpg";
+import decluttering5B from "@/assets/Decluttering/5B.jpeg";
+import decluttering6A from "@/assets/Decluttering/6A.jpg";
+import decluttering6B from "@/assets/Decluttering/6B.jpg";
+
+import twilight2A from "@/assets/Twilight/2A.jpg";
+import twilight2B from "@/assets/Twilight/2B.jpg";
+import twilight3A from "@/assets/Twilight/3A.jpg";
+import twilight3B from "@/assets/Twilight/3B.jpg";
+import twilight4A from "@/assets/Twilight/4A.jpg";
+import twilight4B from "@/assets/Twilight/4B.jpg";
+import twilight5A from "@/assets/Twilight/5A.jpg";
+import twilight5B from "@/assets/Twilight/5B.jpg";
+import twilight6A from "@/assets/Twilight/6A.jpg";
+import twilight6B from "@/assets/Twilight/6B.jpg";
+
+import virtualStaging2A from "@/assets/Virtual Staging/2A.jpg";
+import virtualStaging2B from "@/assets/Virtual Staging/2B.jpg";
+import virtualStaging3A from "@/assets/Virtual Staging/3A.jpg";
+import virtualStaging3B from "@/assets/Virtual Staging/3B.jpg";
+import virtualStaging4A from "@/assets/Virtual Staging/4A.jpg";
+import virtualStaging4B from "@/assets/Virtual Staging/4B.jpg";
+import virtualStaging5A from "@/assets/Virtual Staging/5A.jpg";
+import virtualStaging5B from "@/assets/Virtual Staging/5B.jpg";
+import virtualStaging6A from "@/assets/Virtual Staging/6A.jpg";
+import virtualStaging6B from "@/assets/Virtual Staging/6B.jpg";
+
 
 // --- Data Structure ---
 const servicesData = [
   {
     id: "photo-retouching",
     name: "Photo Retouching & Enhancement",
+    thumbnail: retouchingThumb, // Image 1A
     tagline: "Professional image correction to make every photo clean, bright, and listing-ready.",
     features: [
       "Exposure, brightness & contrast correction",
@@ -28,14 +88,17 @@ const servicesData = [
       "TV screen replacement with realistic content"
     ],
     examples: [
-      { before: before1, after: after1, label: "Brightness & Exposure" },
-      { before: before2, after: after2, label: "Color Balance" },
-      { before: before1, after: after1, label: "Sharpening" },
+      { before: retouching2B, after: retouching2A },
+      { before: retouching3B, after: retouching3A },
+      { before: retouching4B, after: retouching4A },
+      { before: retouching5B, after: retouching5A },
+      { before: retouching6B, after: retouching6A },
     ]
   },
   {
     id: "hdr-blending",
     name: "HDR Photo Blending",
+    thumbnail: hdrThumb, // Image 1A
     tagline: "Seamless blending of multiple exposures for perfectly balanced lighting.",
     features: [
       "Blending of 3–7 bracketed images",
@@ -47,13 +110,17 @@ const servicesData = [
       "Natural tones without over-processing"
     ],
     examples: [
-      { before: before2, after: after2, label: "Window View Recovery" },
-      { before: before1, after: after1, label: "Interior-Exterior Balance" },
+      { before: hdr2B, after: hdr2A },
+      { before: hdr3B, after: hdr3A },
+      { before: hdr4B, after: hdr4A },
+      { before: hdr5B, after: hdr5A },
+      { before: hdr6B, after: hdr6A },
     ]
   },
   {
     id: "virtual-staging",
     name: "Virtual Staging",
+    thumbnail: virtualStagingThumb, // Image 1A
     tagline: "Transform empty or outdated spaces into beautifully furnished homes.",
     features: [
       "Realistic furniture placement & décor",
@@ -65,14 +132,18 @@ const servicesData = [
       "Empty room to fully furnished transformation"
     ],
     examples: [
-      { before: before1, after: after1, label: "Living Room Staging" },
-      { before: before2, after: after2, label: "Bedroom Furnishing" },
+      { before: virtualStaging2B, after: virtualStaging2A },
+      { before: virtualStaging3B, after: virtualStaging3A },
+      { before: virtualStaging4B, after: virtualStaging4A },
+      { before: virtualStaging5B, after: virtualStaging5A },
+      { before: virtualStaging6B, after: virtualStaging6A },
     ]
   },
   {
     id: "decluttering",
     name: "Decluttering & Object Removal",
-    tagline: "Digitally clean and organize spaces to highlight the property’s best features.",
+    thumbnail: declutteringThumb, // Image 1A
+    tagline: "Digitally clean and organize spaces to highlight the property's best features.",
     features: [
       "Removal of personal items (clothes, photos, toys)",
       "Removal of clutter, cables & small objects",
@@ -83,14 +154,18 @@ const servicesData = [
       "Clean, distraction-free presentation"
     ],
     examples: [
-      { before: before1, after: after1, label: "Clutter Removal" },
-      { before: before2, after: after2, label: "Object Cleanup" },
+      { before: decluttering2B, after: decluttering2A },
+      { before: decluttering3B, after: decluttering3A },
+      { before: decluttering4B, after: decluttering4A },
+      { before: decluttering5B, after: decluttering5A },
+      { before: decluttering6B, after: decluttering6A },
     ]
   },
   {
     id: "twilight",
     name: "Twilight Conversion",
-    tagline: "Create stunning dusk images that elevate the property’s visual appeal.",
+    thumbnail: twilightThumb, // Image 1A
+    tagline: "Create stunning dusk images that elevate the property's visual appeal.",
     features: [
       "Day-to-dusk sky replacement",
       "Warm interior lighting enhancement",
@@ -100,14 +175,17 @@ const servicesData = [
       "High-end, luxury twilight finish"
     ],
     examples: [
-      { before: before1, after: after1, label: "Day to Dusk" },
-      { before: before2, after: after2, label: "Exterior Lighting" },
+      { before: twilight2B, after: twilight2A },
+      { before: twilight3B, after: twilight3A },
+      { before: twilight4B, after: twilight4A },
+      { before: twilight5B, after: twilight5A },
+      { before: twilight6B, after: twilight6A },
     ]
   }
 ];
 
 // --- Internal Component: Comparison Slide ---
-const ComparisonSlide = ({ before, after, label }) => {
+const ComparisonSlide = ({ before, after }) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -179,10 +257,6 @@ const ComparisonSlide = ({ before, after, label }) => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg text-primary">
           <MoveHorizontal size={18} />
         </div>
-      </div>
-      
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium z-10 pointer-events-none whitespace-nowrap">
-        {label}
       </div>
     </div>
   );
@@ -263,8 +337,7 @@ const Services = () => {
           </div>
         </section>
 
-        {/* 2. Slideshow Section - RESTORED BACKGROUND HERE */}
-        {/* bg-white dark:bg-footer/30 adds that distinct section look you liked */}
+        {/* 2. Slideshow Section */}
         <section className="py-10 pb-20 px-4 sm:px-6 lg:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
           <div className="max-w-6xl mx-auto text-center mb-8 pt-8">
             <h2 className="text-2xl md:text-3xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
@@ -281,7 +354,6 @@ const Services = () => {
                <ComparisonSlide 
                   before={service.examples[currentSlide].before}
                   after={service.examples[currentSlide].after}
-                  label={service.examples[currentSlide].label}
                   key={currentSlide}
                />
 
@@ -345,7 +417,8 @@ const Services = () => {
               to={`/services/${service.id}`}
               key={service.id}
               className="relative w-full max-w-[23.5rem] h-44 sm:h-50 md:h-56 flex flex-col justify-end p-5 bg-cover bg-center rounded-xl shadow-lg text-white transition-transform hover:scale-105"
-              style={{ backgroundImage: `url(${after1})` }}
+              // UPDATED: Using specific thumbnail instead of after1
+              style={{ backgroundImage: `url(${service.thumbnail})` }}
             >
               <div className="absolute inset-0 bg-black/40 rounded-xl transition-colors hover:bg-black/50"></div>
               <div className="relative z-10">
