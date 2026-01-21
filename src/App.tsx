@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// 1. Import Analytics
+import { Analytics } from "@vercel/analytics/react"; 
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
@@ -19,6 +21,10 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        
+        {/* 2. Add the Component here */}
+        <Analytics />
+        
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
