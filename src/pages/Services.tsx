@@ -35,8 +35,6 @@ import retouching5B from "@/assets/Retouching/5B.webp";
 import retouching6A from "@/assets/Retouching/6A.webp";
 import retouching6B from "@/assets/Retouching/6B.webp";
 
-import decluttering2A from "@/assets/Decluttering/2A.webp";
-import decluttering2B from "@/assets/Decluttering/2B.webp";
 import decluttering3A from "@/assets/Decluttering/3A.webp";
 import decluttering3B from "@/assets/Decluttering/3B.webp";
 import decluttering4A from "@/assets/Decluttering/4A.webp";
@@ -154,7 +152,6 @@ const servicesData = [
       "Clean, distraction-free presentation"
     ],
     examples: [
-      { before: decluttering2B, after: decluttering2A },
       { before: decluttering3B, after: decluttering3A },
       { before: decluttering4B, after: decluttering4A },
       { before: decluttering5B, after: decluttering5A },

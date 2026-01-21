@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+// 1. Import the icon
+import { MoveHorizontal } from "lucide-react";
 
 interface BeforeAfterScrollProps {
   beforeImage: string;
@@ -23,7 +25,7 @@ const BeforeAfterScroll = ({
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
 
-  // --- DRAG HANDLERS (Unified for Mobile & Desktop) ---
+  // --- DRAG HANDLERS ---
 
   const handleMove = useCallback((clientX: number) => {
     const container = containerRef.current?.querySelector('.relative');
@@ -31,7 +33,6 @@ const BeforeAfterScroll = ({
     
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
-    // Calculate percentage and clamp between 0 and 100
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setSliderPosition(percentage);
   }, []);
@@ -46,7 +47,6 @@ const BeforeAfterScroll = ({
     handleMove(e.touches[0].clientX);
   };
 
-  // Global listeners to handle dragging outside the element
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
@@ -93,11 +93,10 @@ const BeforeAfterScroll = ({
             className="relative h-[280px] lg:h-[300px] xl:h-[400px] 2xl:h-[450px] rounded-xl overflow-hidden shadow-2xl bg-gray-100 select-none group"
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
-            // Add resize cursor for desktop
             style={{ cursor: isDragging ? 'grabbing' : 'ew-resize' }}
           >
             
-            {/* BEFORE Image (Base Layer) - Visible on Left */}
+            {/* BEFORE Image */}
             <img
               src={beforeImage}
               alt="Before"
@@ -105,11 +104,10 @@ const BeforeAfterScroll = ({
               draggable={false}
             />
 
-            {/* AFTER Image (Overlay Layer) - Clipped from the Left */}
+            {/* AFTER Image */}
             <div 
               className="absolute inset-0 w-full h-full pointer-events-none"
               style={{
-                // This clips the image from the left (0 0 0 X%), revealing the "After" image on the right side
                 clipPath: `inset(0 0 0 ${sliderPosition}%)`
               }}
             >
@@ -121,18 +119,14 @@ const BeforeAfterScroll = ({
               />
             </div>
 
-            {/* --- SLIDER LINE (Unified Style) --- */}
+            {/* --- SLIDER LINE --- */}
             <div 
               className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_10px_rgba(0,0,0,0.5)] pointer-events-none"
               style={{ left: `${sliderPosition}%` }}
             >
-              {/* Center Handle Icon */}
+              {/* Center Handle Icon - MATCHING SERVICES PAGE EXACTLY */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg text-primary">
-                {/* Horizontal Arrows Icon */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black/70">
-                  <path d="m15 18-6-6 6-6"/>
-                  <path d="m9 18 6-6-6-6"/>
-                </svg>
+                <MoveHorizontal size={18} />
               </div>
             </div>
 
