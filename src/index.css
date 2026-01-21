@@ -88,6 +88,21 @@
   }
 }
 
+/* 1. Tell the browser we support both modes so it doesn't force its own */
+:root {
+  color-scheme: light dark;
+}
+
+/* 2. When our dark mode is OFF, force the browser to render light */
+html:not(.dark) {
+  color-scheme: light;
+}
+
+/* 3. When our dark mode is ON, tell the browser to render dark */
+html.dark {
+  color-scheme: dark;
+}
+
 @layer base {
   * {
     @apply border-border;

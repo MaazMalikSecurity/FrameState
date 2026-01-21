@@ -8,16 +8,16 @@ import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 // Import 1A (before) and 1B (after) for each service
-import retouching1A from "@/assets/Retouching/1A.jpg";
-import retouching1B from "@/assets/Retouching/1B.jpg";
-import hdr1A from "@/assets/HDR/1A.jpg";
-import hdr1B from "@/assets/HDR/1B.jpg";
-import virtualStaging1A from "@/assets/Virtual Staging/1A.jpg";
-import virtualStaging1B from "@/assets/Virtual Staging/1B.jpg";
-import decluttering1A from "@/assets/Decluttering/1A.jpg";
-import decluttering1B from "@/assets/Decluttering/1B.jpg";
-import twilight1A from "@/assets/Twilight/1A.jpg";
-import twilight1B from "@/assets/Twilight/1B.jpg";
+import retouching1A from "@/assets/Retouching/1A.webp";
+import retouching1B from "@/assets/Retouching/1B.webp";
+import hdr1A from "@/assets/HDR/1A.webp";
+import hdr1B from "@/assets/HDR/1B.webp";
+import virtualStaging1A from "@/assets/Virtual Staging/1A.webp";
+import virtualStaging1B from "@/assets/Virtual Staging/1B.webp";
+import decluttering1A from "@/assets/Decluttering/1A.webp";
+import decluttering1B from "@/assets/Decluttering/1B.webp";
+import twilight1A from "@/assets/Twilight/1A.webp";
+import twilight1B from "@/assets/Twilight/1B.webp";
 
 const Index = () => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);

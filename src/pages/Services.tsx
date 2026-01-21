@@ -5,68 +5,68 @@ import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Check, MoveHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// --- NEW IMPORTS: Thumbnails (1A.jpg) ---
-import hdrThumb from "@/assets/HDR/1A.jpg";
-import retouchingThumb from "@/assets/Retouching/1B.jpg";
-import declutteringThumb from "@/assets/Decluttering/1B.jpg";
-import twilightThumb from "@/assets/Twilight/1B.jpg";
-import virtualStagingThumb from "@/assets/Virtual Staging/1B.jpg";
+// --- NEW IMPORTS: Thumbnails (1A.webp) ---
+import hdrThumb from "@/assets/HDR/1A.webp";
+import retouchingThumb from "@/assets/Retouching/1B.webp";
+import declutteringThumb from "@/assets/Decluttering/1B.webp";
+import twilightThumb from "@/assets/Twilight/1B.webp";
+import virtualStagingThumb from "@/assets/Virtual Staging/1B.webp";
 
 // Import images from each service folder (2-6, A=before, B=after)
-import hdr2A from "@/assets/HDR/2A.jpg";
-import hdr2B from "@/assets/HDR/2B.jpg";
-import hdr3A from "@/assets/HDR/3A.jpg";
-import hdr3B from "@/assets/HDR/3B.jpg";
-import hdr4A from "@/assets/HDR/4A.jpg";
-import hdr4B from "@/assets/HDR/4B.jpg";
-import hdr5A from "@/assets/HDR/5A.jpg";
-import hdr5B from "@/assets/HDR/5B.jpg";
-import hdr6A from "@/assets/HDR/6A.jpg";
-import hdr6B from "@/assets/HDR/6B.jpg";
+import hdr2A from "@/assets/HDR/2A.webp";
+import hdr2B from "@/assets/HDR/2B.webp";
+import hdr3A from "@/assets/HDR/3A.webp";
+import hdr3B from "@/assets/HDR/3B.webp";
+import hdr4A from "@/assets/HDR/4A.webp";
+import hdr4B from "@/assets/HDR/4B.webp";
+import hdr5A from "@/assets/HDR/5A.webp";
+import hdr5B from "@/assets/HDR/5B.webp";
+import hdr6A from "@/assets/HDR/6A.webp";
+import hdr6B from "@/assets/HDR/6B.webp";
 
-import retouching2A from "@/assets/Retouching/2A.jpg";
-import retouching2B from "@/assets/Retouching/2B.jpg";
-import retouching3A from "@/assets/Retouching/3A.jpg";
-import retouching3B from "@/assets/Retouching/3B.jpg";
-import retouching4A from "@/assets/Retouching/4A.jpg";
-import retouching4B from "@/assets/Retouching/4B.jpg";
-import retouching5A from "@/assets/Retouching/5A.jpg";
-import retouching5B from "@/assets/Retouching/5B.jpg";
-import retouching6A from "@/assets/Retouching/6A.jpg";
-import retouching6B from "@/assets/Retouching/6B.jpg";
+import retouching2A from "@/assets/Retouching/2A.webp";
+import retouching2B from "@/assets/Retouching/2B.webp";
+import retouching3A from "@/assets/Retouching/3A.webp";
+import retouching3B from "@/assets/Retouching/3B.webp";
+import retouching4A from "@/assets/Retouching/4A.webp";
+import retouching4B from "@/assets/Retouching/4B.webp";
+import retouching5A from "@/assets/Retouching/5A.webp";
+import retouching5B from "@/assets/Retouching/5B.webp";
+import retouching6A from "@/assets/Retouching/6A.webp";
+import retouching6B from "@/assets/Retouching/6B.webp";
 
-import decluttering2A from "@/assets/Decluttering/2A.jpg";
-import decluttering2B from "@/assets/Decluttering/2B.jpg";
-import decluttering3A from "@/assets/Decluttering/3A.jpg";
-import decluttering3B from "@/assets/Decluttering/3B.jpg";
-import decluttering4A from "@/assets/Decluttering/4A.jpg";
-import decluttering4B from "@/assets/Decluttering/4B.jpg";
-import decluttering5A from "@/assets/Decluttering/5A.jpg";
-import decluttering5B from "@/assets/Decluttering/5B.jpg";
-import decluttering6A from "@/assets/Decluttering/6A.jpg";
-import decluttering6B from "@/assets/Decluttering/6B.jpg";
+import decluttering2A from "@/assets/Decluttering/2A.webp";
+import decluttering2B from "@/assets/Decluttering/2B.webp";
+import decluttering3A from "@/assets/Decluttering/3A.webp";
+import decluttering3B from "@/assets/Decluttering/3B.webp";
+import decluttering4A from "@/assets/Decluttering/4A.webp";
+import decluttering4B from "@/assets/Decluttering/4B.webp";
+import decluttering5A from "@/assets/Decluttering/5A.webp";
+import decluttering5B from "@/assets/Decluttering/5B.webp";
+import decluttering6A from "@/assets/Decluttering/6A.webp";
+import decluttering6B from "@/assets/Decluttering/6B.webp";
 
-import twilight2A from "@/assets/Twilight/2A.jpg";
-import twilight2B from "@/assets/Twilight/2B.jpg";
-import twilight3A from "@/assets/Twilight/3A.jpg";
-import twilight3B from "@/assets/Twilight/3B.jpg";
-import twilight4A from "@/assets/Twilight/4A.jpg";
-import twilight4B from "@/assets/Twilight/4B.jpg";
-import twilight5A from "@/assets/Twilight/5A.jpg";
-import twilight5B from "@/assets/Twilight/5B.jpg";
-import twilight6A from "@/assets/Twilight/6A.jpg";
-import twilight6B from "@/assets/Twilight/6B.jpg";
+import twilight2A from "@/assets/Twilight/2A.webp";
+import twilight2B from "@/assets/Twilight/2B.webp";
+import twilight3A from "@/assets/Twilight/3A.webp";
+import twilight3B from "@/assets/Twilight/3B.webp";
+import twilight4A from "@/assets/Twilight/4A.webp";
+import twilight4B from "@/assets/Twilight/4B.webp";
+import twilight5A from "@/assets/Twilight/5A.webp";
+import twilight5B from "@/assets/Twilight/5B.webp";
+import twilight6A from "@/assets/Twilight/6A.webp";
+import twilight6B from "@/assets/Twilight/6B.webp";
 
-import virtualStaging2A from "@/assets/Virtual Staging/2A.jpg";
-import virtualStaging2B from "@/assets/Virtual Staging/2B.jpg";
-import virtualStaging3A from "@/assets/Virtual Staging/3A.jpg";
-import virtualStaging3B from "@/assets/Virtual Staging/3B.jpg";
-import virtualStaging4A from "@/assets/Virtual Staging/4A.jpg";
-import virtualStaging4B from "@/assets/Virtual Staging/4B.jpg";
-import virtualStaging5A from "@/assets/Virtual Staging/5A.jpg";
-import virtualStaging5B from "@/assets/Virtual Staging/5B.jpg";
-import virtualStaging6A from "@/assets/Virtual Staging/6A.jpg";
-import virtualStaging6B from "@/assets/Virtual Staging/6B.jpg";
+import virtualStaging2A from "@/assets/Virtual Staging/2A.webp";
+import virtualStaging2B from "@/assets/Virtual Staging/2B.webp";
+import virtualStaging3A from "@/assets/Virtual Staging/3A.webp";
+import virtualStaging3B from "@/assets/Virtual Staging/3B.webp";
+import virtualStaging4A from "@/assets/Virtual Staging/4A.webp";
+import virtualStaging4B from "@/assets/Virtual Staging/4B.webp";
+import virtualStaging5A from "@/assets/Virtual Staging/5A.webp";
+import virtualStaging5B from "@/assets/Virtual Staging/5B.webp";
+import virtualStaging6A from "@/assets/Virtual Staging/6A.webp";
+import virtualStaging6B from "@/assets/Virtual Staging/6B.webp";
 
 
 // --- Data Structure ---

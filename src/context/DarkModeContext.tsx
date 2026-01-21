@@ -36,17 +36,21 @@ export const DarkModeProvider = ({ children }: { children: React.ReactNode }) =>
     });
   };
 
-  // Apply dark mode class to html element
+  // Apply dark mode class AND style to html element
   useEffect(() => {
     const html = document.documentElement;
     if (darkMode) {
       html.classList.add("dark");
+      // This tells the browser: "The page is dark, don't auto-invert colors"
+      html.style.colorScheme = "dark"; 
     } else {
       html.classList.remove("dark");
+      // This tells the browser: "The page is light, keep it light even if phone is dark"
+      html.style.colorScheme = "light"; 
     }
   }, [darkMode]);
 
-  // Listen for system dark mode changes (optional - updates if user changes system setting)
+  // Listen for system dark mode changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     

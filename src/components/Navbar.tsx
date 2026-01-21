@@ -110,9 +110,9 @@ const Navbar = () => {
 
             <li>
               <Link
-                to="/aboutus"
+                to="/about"
                 className={`${linkBase} ${
-                  location.pathname === "/aboutus" ? active : inactive
+                  location.pathname === "/about" ? active : inactive
                 }`}
               >
                 About Us
@@ -230,10 +230,10 @@ const Navbar = () => {
 
             <li>
               <Link
-                to="/aboutus"
+                to="/about"
                 onClick={closeMobileMenu}
                 className={`block py-2 text-base font-medium ${
-                  location.pathname === "/aboutus" ? active : inactive
+                  location.pathname === "/about" ? active : inactive
                 }`}
               >
                 About Us

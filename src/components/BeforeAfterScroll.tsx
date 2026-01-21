@@ -246,24 +246,12 @@ const BeforeAfterScroll = ({
       ref={containerRef}
       className="min-h-[85vh] py-10 px-6 lg:px-12 xl:px-16 2xl:px-20 flex items-center"
     >
-      {/* LAYOUT UPDATES:
-         1. max-w-[100rem] keeps the container wide.
-         2. gap-6 lg:gap-8 (Reduced from gap-12/16) brings text closer.
-      */}
       <div className={`max-w-[100rem] mx-auto w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-8 xl:gap-12 ${
         reversed ? "lg:flex-row-reverse" : ""
       }`}>
         
-        {/* IMAGE CONTAINER:
-           1. Removed flex-1.
-           2. Added lg:w-[58%] to give it ~60% of the width (increasing width relative to text).
-        */}
         <div className={`w-full lg:w-[55%] ${reversed ? 'lg:ml-0' : 'lg:mr-0'}`}>
           
-          {/* IMAGE HEIGHTS:
-             Adjusted to be "less tall" than previous version but still rectangular.
-             Mobile: 280px | Desktop: 380px -> 520px
-          */}
           <div 
             className="relative h-[280px] lg:h-[300px] xl:h-[400px] 2xl:h-[450px] rounded-xl overflow-hidden shadow-2xl bg-gray-100 select-none"
             onMouseDown={handleMouseDown}
@@ -273,7 +261,7 @@ const BeforeAfterScroll = ({
             style={{ cursor: isMobile ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
           >
             
-            {/* BEFORE Image (Base Layer) */}
+            {/* BEFORE Image (Base Layer) - Remains Visible on Left */}
             <img
               src={beforeImage}
               alt="Before"
@@ -281,12 +269,15 @@ const BeforeAfterScroll = ({
               draggable={false}
             />
 
-            {/* AFTER Image (Overlay Layer) */}
+            {/* AFTER Image (Overlay Layer) - Now clipped correctly from Left */}
             <div 
               className="absolute inset-0 w-full h-full pointer-events-none"
               style={{
                 clipPath: isMobile 
-                  ? `inset(0 ${100 - sliderPosition}% 0 0)`
+                  // FIXED: Changed from `inset(0 ${100 - sliderPosition}% 0 0)`
+                  // to `inset(0 0 0 ${sliderPosition}%)`.
+                  // This clips the "After" image from the left side, so it appears on the Right.
+                  ? `inset(0 0 0 ${sliderPosition}%)`
                   : `inset(${100 - (scrollProgress * 100)}% 0 0 0)`
               }}
             >
@@ -355,10 +346,6 @@ const BeforeAfterScroll = ({
           </div>
         </div>
 
-        {/* TEXT CONTAINER:
-           1. Removed flex-1.
-           2. Added lg:w-[42%] to reduce the space it takes.
-        */}
         <div className="w-full lg:w-[50%] text-center lg:text-left">
           <h3 className="text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-3 lg:mb-4 xl:mb-6">
             {title}
