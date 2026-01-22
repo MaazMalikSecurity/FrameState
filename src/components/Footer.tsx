@@ -22,7 +22,6 @@ const Footer = () => {
             <div className="space-y-1 text-sm text-gray-400">
               <p>Email: support@framestate.com</p>
               <p>Phone: +1 234 567 890</p>
-              <p>Address: Your City, Country</p>
             </div>
           </div>
 
@@ -30,13 +29,10 @@ const Footer = () => {
           <div>
             <h4 className="text-accent font-semibold mb-2">Follow Us</h4>
             <div className="flex flex-col gap-1">
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/framestate.co?igsh=bHkwNHN5cXpycXEx" className="text-sm text-gray-400 hover:text-white transition-colors">
                 Instagram
               </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Facebook
-              </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/company/framestateofficial/" className="text-sm text-gray-400 hover:text-white transition-colors">
                 LinkedIn
               </a>
             </div>
