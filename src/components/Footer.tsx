@@ -29,10 +29,21 @@ const Footer = () => {
           <div>
             <h4 className="text-accent font-semibold mb-2">Follow Us</h4>
             <div className="flex flex-col gap-1">
-              <a href="https://www.instagram.com/framestate.co?igsh=bHkwNHN5cXpycXEx" className="text-sm text-gray-400 hover:text-white transition-colors">
+              <a
+                href="https://www.instagram.com/framestate.co?igsh=bHkwNHN5cXpycXEx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
                 Instagram
               </a>
-              <a href="https://www.linkedin.com/company/framestateofficial/" className="text-sm text-gray-400 hover:text-white transition-colors">
+
+              <a
+                href="https://www.linkedin.com/company/framestateofficial/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
                 LinkedIn
               </a>
             </div>

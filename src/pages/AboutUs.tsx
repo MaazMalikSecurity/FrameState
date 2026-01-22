@@ -10,7 +10,7 @@ const About = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 px-6 lg:px-12 xl:px-16 bg-secondary">
+      <section className="pt-20 md:pt-24 pb-12 px-6 lg:px-12 xl:px-16 bg-secondary">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-6">
             About Framestate
@@ -87,7 +87,8 @@ const About = () => {
               Next-Gen Editing System
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Most editing services break when volume increases. <span className="text-[#22265c] dark:text-white font-bold">Framestate is designed for it.</span>
+              Most editing services break when volume increases. <br />
+              <span className="text-[#22265c] dark:text-white font-bold"> Framestate is designed for it.</span>
             </p>
           </div>
 
