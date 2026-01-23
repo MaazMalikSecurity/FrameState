@@ -5,15 +5,15 @@ import Footer from "@/components/Footer";
 import { ChevronLeft, ChevronRight, Check, MoveHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// --- NEW IMPORTS: Thumbnails (1A.webp) ---
+// --- IMPORTS (Keep exactly as is) ---
 import hdrThumb from "@/assets/HDR/1A.webp";
 import retouchingThumb from "@/assets/Retouching/1B.webp";
 import declutteringThumb from "@/assets/Decluttering/1B.webp";
 import twilightThumb from "@/assets/Twilight/1B.webp";
 import virtualStagingThumb from "@/assets/Virtual Staging/1B.webp";
 
-// Import images from each service folder (2-6, A=before, B=after)
-import hdr2A from "@/assets/HDR/2A.webp";
+// ... (Keep all your existing image imports here) ...
+import hdr2A from "@/assets/HDR/2A.webp"; 
 import hdr2B from "@/assets/HDR/2B.webp";
 import hdr3A from "@/assets/HDR/3A.webp";
 import hdr3B from "@/assets/HDR/3B.webp";
@@ -67,12 +67,12 @@ import virtualStaging6A from "@/assets/Virtual Staging/6A.webp";
 import virtualStaging6B from "@/assets/Virtual Staging/6B.webp";
 
 
-// --- Data Structure ---
+// --- Data Structure (Keep exactly the same) ---
 const servicesData = [
   {
     id: "photo-retouching",
     name: "Photo Retouching & Enhancement",
-    thumbnail: retouchingThumb, // Image 1A
+    thumbnail: retouchingThumb,
     tagline: "Professional image correction to make every photo clean, bright, and listing-ready.",
     features: [
       "Exposure, brightness & contrast correction",
@@ -96,7 +96,7 @@ const servicesData = [
   {
     id: "hdr-blending",
     name: "HDR Photo Blending",
-    thumbnail: hdrThumb, // Image 1A
+    thumbnail: hdrThumb,
     tagline: "Seamless blending of multiple exposures for perfectly balanced lighting.",
     features: [
       "Blending of 3–7 bracketed images",
@@ -118,7 +118,7 @@ const servicesData = [
   {
     id: "virtual-staging",
     name: "Virtual Staging",
-    thumbnail: virtualStagingThumb, // Image 1A
+    thumbnail: virtualStagingThumb,
     tagline: "Transform empty or outdated spaces into beautifully furnished homes.",
     features: [
       "Realistic furniture placement & décor",
@@ -140,7 +140,7 @@ const servicesData = [
   {
     id: "decluttering",
     name: "Decluttering & Object Removal",
-    thumbnail: declutteringThumb, // Image 1A
+    thumbnail: declutteringThumb,
     tagline: "Digitally clean and organize spaces to highlight the property's best features.",
     features: [
       "Removal of personal items (clothes, photos, toys)",
@@ -161,7 +161,7 @@ const servicesData = [
   {
     id: "twilight",
     name: "Twilight Conversion",
-    thumbnail: twilightThumb, // Image 1A
+    thumbnail: twilightThumb,
     tagline: "Create stunning dusk images that elevate the property's visual appeal.",
     features: [
       "Day-to-dusk sky replacement",
@@ -182,12 +182,12 @@ const servicesData = [
 ];
 
 // --- Internal Component: Comparison Slide ---
-const ComparisonSlide = ({ before, after }) => {
+const ComparisonSlide = ({ before, after }: { before: string; after: string }) => {
   const [sliderPosition, setSliderPosition] = useState(50);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleMove = useCallback((clientX) => {
+  const handleMove = useCallback((clientX: number) => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
@@ -196,22 +196,22 @@ const ComparisonSlide = ({ before, after }) => {
     }
   }, []);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     handleMove(e.clientX);
   };
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
     handleMove(e.touches[0].clientX);
   };
 
   useEffect(() => {
     const handleMouseUp = () => setIsDragging(false);
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (isDragging) handleMove(e.clientX);
     };
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: TouchEvent) => {
       if (isDragging) handleMove(e.touches[0].clientX);
     };
 
@@ -296,58 +296,68 @@ const Services = () => {
       <div className="min-h-screen bg-secondary transition-colors duration-300">
         <Navbar />
         
-        {/* 1. Header & Description Section */}
-        <section className="min-h-[60vh] flex items-center pt-32 pb-16 px-6 lg:px-12 xl:px-20 max-w-[90rem] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
-            
-            {/* Left: Heading & Main Description */}
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-6 leading-tight">
-                {service.name}
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                {service.tagline}
-              </p>
-              <div className="mt-8 flex gap-4">
-                 <Button className="bg-[#f26b2c] hover:bg-[#f26b2c]/90 text-white" size="lg" asChild>
-                    <Link to="/free-trial">Start Free Trial</Link>
-                 </Button>
-              </div>
-            </div>
+        {/* 1. Header & Description Section - UPDATED WITH BACKGROUND IMAGE & FIXED HEIGHT */}
+        <section 
+          className="relative min-h-[60vh] flex items-center pt-32 pb-16 bg-cover bg-center"
+          style={{ backgroundImage: `url(${service.thumbnail})` }}
+        >
+          {/* Dark Overlay for Text Visibility */}
+          <div className="absolute inset-0 bg-black/75"></div>
 
-            {/* Right: "Includes" List */}
-            <div className="bg-white/50 dark:bg-footer/50 rounded-2xl p-6 lg:p-8 border border-border/50 shadow-sm backdrop-blur-sm">
-              <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                What's Included
-              </h3>
-              <ul className="space-y-3">
-                {service.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-sm md:text-base text-muted-foreground">
-                    <div className="mt-1 min-w-4 min-h-4 w-4 h-4 rounded-full bg-green-500/10 flex items-center justify-center">
-                      <Check size={10} className="text-green-600" />
-                    </div>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+          {/* Content Container */}
+          <div className="relative z-10 w-full max-w-[140rem] mx-auto px-6 lg:px-12 xl:px-20 2xl:px-24">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 2xl:gap-24 items-center w-full">
+              
+              {/* Left: Heading & Main Description */}
+              <div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl 3xl:text-7xl font-bold text-white mb-6 leading-tight">
+                  {service.name}
+                </h1>
+                <p className="text-lg md:text-xl 2xl:text-2xl text-white/90 leading-relaxed">
+                  {service.tagline}
+                </p>
+                <div className="mt-8 flex gap-4">
+                   <Button className="bg-[#f26b2c] hover:bg-[#f26b2c]/90 text-white text-base lg:text-lg px-8 py-6" size="lg" asChild>
+                      <Link to="/free-trial">Start Free Trial</Link>
+                   </Button>
+                </div>
+              </div>
+
+              {/* Right: "Includes" List - Glass Effect & FIXED HEIGHT */}
+              {/* UPDATED: Added min-h-[550px] and flex/justify-center to standardize box size */}
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 2xl:p-12 border border-white/20 shadow-xl min-h-[550px] 2xl:min-h-[650px] flex flex-col justify-center">
+                <h3 className="text-lg 2xl:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                  What's Included
+                </h3>
+                <ul className="space-y-3 2xl:space-y-4">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm md:text-base 2xl:text-lg text-white/90">
+                      <div className="mt-1 min-w-4 min-h-4 w-4 h-4 2xl:w-5 2xl:h-5 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center">
+                        <Check size={10} className="text-green-400 2xl:w-4 2xl:h-4" />
+                      </div>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
         {/* 2. Slideshow Section */}
-        <section className="py-10 pb-20 px-4 sm:px-6 lg:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
-          <div className="max-w-6xl mx-auto text-center mb-8 pt-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
+        <section className="py-10 pb-20 px-4 sm:px-6 lg:px-12 2xl:px-24 border-t border-border/50 bg-white dark:bg-footer/30">
+          <div className="max-w-[100rem] mx-auto text-center mb-8 pt-8">
+            <h2 className="text-2xl md:text-3xl 2xl:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
               See the Difference
             </h2>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm 2xl:text-lg">
               Drag the slider to compare before and after results
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto relative group">
+          <div className="max-w-4xl lg:max-w-6xl mx-auto relative group">
             
-            <div className="relative aspect-[4/3] md:aspect-[16/9] lg:aspect-[2/1] w-full bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-gray-800">
+            <div className="relative aspect-[4/3] md:aspect-video w-full bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-gray-800">
                <ComparisonSlide 
                   before={service.examples[currentSlide].before}
                   after={service.examples[currentSlide].after}
@@ -357,18 +367,18 @@ const Services = () => {
               {/* Navigation Arrows */}
               <button 
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 2xl:p-4 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
                 aria-label="Previous example"
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={24} className="2xl:w-8 2xl:h-8" />
               </button>
 
               <button 
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 2xl:p-4 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
                 aria-label="Next example"
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={24} className="2xl:w-8 2xl:h-8" />
               </button>
             </div>
 
@@ -398,31 +408,30 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-secondary transition-colors duration-300">
       <Navbar />
-      <section className="py-12">
-        <div className="text-center mb-8 pt-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
+      <section className="py-12 lg:py-20 2xl:py-24">
+        <div className="text-center mb-12 pt-10 lg:pt-10">
+          <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
             Our Services
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto px-6">
+          <p className="text-muted-foreground text-lg 2xl:text-2xl max-w-2xl 2xl:max-w-4xl mx-auto px-6">
             Click on a service to see detailed examples and transformations
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-5 justify-items-center pb-12">
+        <div className="max-w-[140rem] mx-auto px-6 2xl:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 gap-y-8 gap-x-6 2xl:gap-y-12 2xl:gap-x-10 justify-items-center pb-12">
           {servicesData.map((service) => (
             <Link
               to={`/services/${service.id}`}
               key={service.id}
-              className="relative w-full max-w-[23.5rem] h-44 sm:h-50 md:h-56 flex flex-col justify-end p-5 bg-cover bg-center rounded-xl shadow-lg text-white transition-transform hover:scale-105"
-              // UPDATED: Using specific thumbnail instead of after1
+              className="relative w-full h-44 sm:h-50 md:h-56 lg:h-64 2xl:h-80 flex flex-col justify-end p-5 2xl:p-8 bg-cover bg-center rounded-xl shadow-lg text-white transition-transform hover:scale-105"
               style={{ backgroundImage: `url(${service.thumbnail})` }}
             >
               <div className="absolute inset-0 bg-black/40 rounded-xl transition-colors hover:bg-black/50"></div>
               <div className="relative z-10">
-                <h3 className="text-lg md:text-xl font-bold mb-1">
+                <h3 className="text-lg md:text-xl 2xl:text-3xl font-bold mb-1">
                   {service.name}
                 </h3>
-                <p className="text-sm md:text-base text-white/90 line-clamp-2">
+                <p className="text-sm md:text-base 2xl:text-xl text-white/90 line-clamp-2">
                   {service.tagline}
                 </p>
               </div>

@@ -146,12 +146,12 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 bg-primary text-primary-foreground">
+      <section className="py-16 md:py-24 px-4 sm:px-6 bg-[#f26b2c] dark:bg-[#22265c] text-white transition-colors duration-300">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
             Ready to Transform Your Listings?
           </h2>
-          <p className="text-base sm:text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto text-white/90">
             Try our professional photo editing services with no commitment. 
             See the difference quality editing makes.
           </p>
@@ -159,12 +159,12 @@ const Index = () => {
             variant="hero" 
             size="lg" 
             asChild
+            className="bg-white text-[#f26b2c] hover:bg-white/90 dark:bg-[#f26b2c] dark:text-white dark:hover:bg-[#f26b2c]/90 transition-colors"
           >
             <Link to="/free-trial">Start Your Free Trial</Link>
           </Button>
         </div>
       </section>
-
       <Footer />
     </div>
   );

@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-// 1. Import the icon
 import { MoveHorizontal } from "lucide-react";
 
 interface BeforeAfterScrollProps {
@@ -26,7 +25,6 @@ const BeforeAfterScroll = ({
   const [isDragging, setIsDragging] = useState(false);
 
   // --- DRAG HANDLERS ---
-
   const handleMove = useCallback((clientX: number) => {
     const container = containerRef.current?.querySelector('.relative');
     if (!container) return;
@@ -80,17 +78,24 @@ const BeforeAfterScroll = ({
   return (
     <div
       ref={containerRef}
-      className="min-h-[85vh] py-10 px-6 lg:px-12 xl:px-16 2xl:px-20 flex items-center"
+      // UPDATED: Adjusted padding for large screens to let content breathe
+      className="min-h-[85vh] py-10 px-6 lg:px-12 xl:px-16 2xl:px-24 flex items-center"
     >
-      <div className={`max-w-[100rem] mx-auto w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-8 xl:gap-12 ${
+      {/* UPDATED: Increased max-w from 100rem to 120rem (approx 1920px) so it fills 1080p screens better */}
+      <div className={`max-w-[120rem] mx-auto w-full flex flex-col lg:flex-row items-center gap-8 lg:gap-12 xl:gap-20 ${
         reversed ? "lg:flex-row-reverse" : ""
       }`}>
         
         {/* --- IMAGE CONTAINER --- */}
+        {/* UPDATED: Increased width share to 55% on large screens */}
         <div className={`w-full lg:w-[55%] ${reversed ? 'lg:ml-0' : 'lg:mr-0'}`}>
           
           <div 
-            className="relative h-[280px] lg:h-[300px] xl:h-[400px] 2xl:h-[450px] rounded-xl overflow-hidden shadow-2xl bg-gray-100 select-none group"
+            // UPDATED: 
+            // 1. Kept h-[280px] for mobile/tablet.
+            // 2. Added `lg:h-auto` and `lg:aspect-[3/2]` for desktop.
+            // This forces the height to grow mathematically with the width, solving the "empty" look.
+            className="relative h-[280px] lg:h-auto lg:aspect-[3/2] rounded-xl overflow-hidden shadow-2xl bg-gray-100 select-none group w-full"
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
             style={{ cursor: isDragging ? 'grabbing' : 'ew-resize' }}
@@ -124,7 +129,6 @@ const BeforeAfterScroll = ({
               className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_10px_rgba(0,0,0,0.5)] pointer-events-none"
               style={{ left: `${sliderPosition}%` }}
             >
-              {/* Center Handle Icon - MATCHING SERVICES PAGE EXACTLY */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg text-primary">
                 <MoveHorizontal size={18} />
               </div>
@@ -142,17 +146,20 @@ const BeforeAfterScroll = ({
         </div>
 
         {/* --- TEXT CONTAINER --- */}
-        <div className="w-full lg:w-[50%] text-center lg:text-left">
-          <h3 className="text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-3 lg:mb-4 xl:mb-6">
+        <div className="w-full lg:w-[45%] text-center lg:text-left">
+          {/* UPDATED: Added 3xl text sizes for ultra-wide screens */}
+          <h3 className="text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 3xl:text-6xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-3 lg:mb-4 xl:mb-6 leading-tight">
             {title}
           </h3>
-          <p className="text-base lg:text-lg xl:text-xl 2xl:text-2xl text-muted-foreground leading-relaxed mb-6">
+          {/* UPDATED: Added 3xl text sizes and relaxed leading */}
+          <p className="text-base lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl text-muted-foreground leading-relaxed lg:leading-relaxed mb-6">
             {description}
           </p>
           {serviceId && (
             <Button 
               asChild
-              className="bg-white text-[#f26b2c] border-2 border-[#f26b2c] hover:bg-[#f26b2c] hover:text-white transition-colors dark:bg-[#252b37] dark:hover:bg-[#f26b2c] dark:hover:text-[#252b37]"
+              // UPDATED: Made button larger on big screens
+              className="bg-white text-[#f26b2c] border-2 border-[#f26b2c] hover:bg-[#f26b2c] hover:text-white transition-colors dark:bg-[#252b37] dark:hover:bg-[#f26b2c] dark:hover:text-[#252b37] text-base lg:text-lg py-6 px-8"
             >
               <Link to={`/services/${serviceId}`}>
                 View More Examples
