@@ -2,7 +2,8 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ChevronLeft, ChevronRight, Check, MoveHorizontal } from "lucide-react";
+// UPDATED: Added ChevronDown to imports
+import { ChevronLeft, ChevronRight, Check, MoveHorizontal, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // --- IMPORTS (Keep exactly as is) ---
@@ -263,6 +264,19 @@ const ComparisonSlide = ({ before, after }: { before: string; after: string }) =
 const Services = () => {
   const { serviceId } = useParams();
   const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // UPDATED: Scroll Indicator State
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  // UPDATED: Scroll Event Listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollIndicator(window.scrollY < 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     setCurrentSlide(0);
@@ -296,7 +310,7 @@ const Services = () => {
       <div className="min-h-screen bg-secondary transition-colors duration-300">
         <Navbar />
         
-        {/* 1. Header & Description Section - UPDATED WITH BACKGROUND IMAGE & FIXED HEIGHT */}
+        {/* 1. Header & Description Section */}
         <section 
           className="relative min-h-[60vh] flex items-center pt-32 pb-16 bg-cover bg-center"
           style={{ backgroundImage: `url(${service.thumbnail})` }}
@@ -323,25 +337,37 @@ const Services = () => {
                 </div>
               </div>
 
-              {/* Right: "Includes" List - Glass Effect & FIXED HEIGHT */}
-              {/* UPDATED: Added min-h-[550px] and flex/justify-center to standardize box size */}
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 2xl:p-12 border border-white/20 shadow-xl min-h-[550px] 2xl:min-h-[650px] flex flex-col justify-center">
-                <h3 className="text-lg 2xl:text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                  What's Included
-                </h3>
-                <ul className="space-y-3 2xl:space-y-4">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm md:text-base 2xl:text-lg text-white/90">
-                      <div className="mt-1 min-w-4 min-h-4 w-4 h-4 2xl:w-5 2xl:h-5 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center">
-                        <Check size={10} className="text-green-400 2xl:w-4 2xl:h-4" />
-                      </div>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Right: "Includes" List */}
+              <div className="flex flex-col justify-center min-h-[500px] lg:min-h-[600px] 2xl:min-h-[700px]">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 2xl:p-12 border border-white/20 shadow-xl">
+                  <h3 className="text-lg 2xl:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    What's Included
+                  </h3>
+                  <ul className="space-y-3 2xl:space-y-4">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-3 text-sm md:text-base 2xl:text-lg text-white/90">
+                        <div className="mt-1 min-w-4 min-h-4 w-4 h-4 2xl:w-5 2xl:h-5 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center">
+                          <Check size={10} className="text-green-400 2xl:w-4 2xl:h-4" />
+                        </div>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
+
             </div>
           </div>
+
+          {/* UPDATED: Mobile Scroll Indicator (Hidden on Desktop 'lg:hidden') */}
+          {showScrollIndicator && (
+            <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center animate-bounce lg:hidden">
+              <div className="flex flex-col items-center gap-1 sm:gap-2">
+                <span className="text-white text-xs sm:text-sm font-medium whitespace-nowrap shadow-black/50 drop-shadow-md">Scroll Down</span>
+                <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-md" />
+              </div>
+            </div>
+          )}
         </section>
 
         {/* 2. Slideshow Section */}
