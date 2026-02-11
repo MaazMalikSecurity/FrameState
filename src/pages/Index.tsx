@@ -128,7 +128,7 @@ const Index = () => {
       {/* Services Showcase */}
       <section className="bg-secondary py-16 md:py-24">
         <div className="text-center mb-12 md:mb-16 px-4 max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#22265c] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#22265c] dark:text-white mb-4">
             How We Enhance Your Listings
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl">

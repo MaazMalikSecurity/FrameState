@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logowhite.png";
 
+// Import the icons
+import { FaInstagram, FaLinkedin, FaWhatsapp, FaRegEnvelope } from "react-icons/fa";
+
 const Footer = () => {
   return (
-    // UPDATED: Increased vertical padding for large screens
+    // Increased vertical padding for large screens
     <footer className="bg-footer text-footer-foreground py-5 lg:py-10 2xl:py-14 px-4 lg:px-6 xl:px-10 2xl:px-17">
       
-      {/* UPDATED: Increased max-width to 120rem (approx 1920px) */}
+      {/* Increased max-width to 120rem (approx 1920px) */}
       <div className="max-w-[120rem] mx-auto">
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 2xl:gap-20 mb-8 lg:mb-16">
@@ -14,54 +17,80 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="flex flex-col items-start">
             <Link to="/" className="mb-4 lg:mb-6 block">
-              {/* UPDATED: Logo scales up on large screens */}
+              {/* Logo scales up on large screens */}
               <img 
                 src={logo} 
                 alt="Logo" 
                 className="h-10 lg:h-12 2xl:h-16 w-auto transition-all duration-300" 
               />
             </Link>
-            {/* UPDATED: Text scales up */}
+            {/* Text scales up */}
             <p className="text-gray-400 text-sm lg:text-base 2xl:text-lg max-w-sm">
               Professional real estate photo editing services.
             </p>
           </div>
 
-          {/* Contact */}
+          {/* Contact Section */}
           <div>
-            {/* UPDATED: Headers scale up */}
             <h4 className="text-accent font-semibold mb-3 lg:mb-5 text-base lg:text-lg 2xl:text-xl">
               Contact
             </h4>
-            <div className="space-y-2 lg:space-y-3 text-sm lg:text-base 2xl:text-lg text-gray-400">
-              <p>Email: support@framestate.com</p>
-              <p>Phone: +1 234 567 890</p>
+            <div className="space-y-3 text-sm lg:text-base 2xl:text-lg text-gray-400">
+              
+              {/* Email Item */}
+              <a 
+                href="mailto:info@framestate.com" 
+                className="flex items-center gap-3 hover:text-white transition-colors group"
+              >
+                {/* Email Icon */}
+                <FaRegEnvelope className="text-lg lg:text-xl 2xl:text-2xl text-accent group-hover:scale-110 transition-transform" />
+                <span>info@framestate.com</span>
+              </a>
+
+              {/* Phone/WhatsApp Item */}
+              <a 
+                // Link opens WhatsApp directly
+                href="https://wa.me/923409684030" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 hover:text-white transition-colors group"
+              >
+                {/* WhatsApp Icon */}
+                <FaWhatsapp className="text-lg lg:text-xl 2xl:text-2xl text-green-500 group-hover:scale-110 transition-transform" />
+                <span>+92 340 9684030</span>
+              </a>
+
             </div>
           </div>
 
-          {/* Social Links */}
+          {/* Social Links Section */}
           <div>
             <h4 className="text-accent font-semibold mb-3 lg:mb-5 text-base lg:text-lg 2xl:text-xl">
               Follow Us
             </h4>
-            <div className="flex flex-col gap-2 lg:gap-3">
+            
+            {/* Changed to flex-row to display icons side-by-side */}
+            <div className="flex flex-row gap-4 lg:gap-5">
               <a
                 href="https://www.instagram.com/framestate.co?igsh=bHkwNHN5cXpycXEx"
                 target="_blank"
                 rel="noopener noreferrer"
-                // UPDATED: Links scale up
-                className="text-sm lg:text-base 2xl:text-lg text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-pink-500 transition-colors transform hover:-translate-y-1 duration-300"
+                aria-label="Instagram"
               >
-                Instagram
+                {/* Instagram Icon */}
+                <FaInstagram className="text-2xl lg:text-3xl 2xl:text-4xl" />
               </a>
 
               <a
                 href="https://www.linkedin.com/company/framestateofficial/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm lg:text-base 2xl:text-lg text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-blue-500 transition-colors transform hover:-translate-y-1 duration-300"
+                aria-label="LinkedIn"
               >
-                LinkedIn
+                {/* LinkedIn Icon */}
+                <FaLinkedin className="text-2xl lg:text-3xl 2xl:text-4xl" />
               </a>
             </div>
           </div>
