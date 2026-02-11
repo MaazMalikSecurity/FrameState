@@ -26,7 +26,7 @@ const FreeTrial = () => {
       ${formData.note}
       `;
 
-    window.location.href = `mailto:trial@framestate.com?subject=Free Trial Request&body=${encodeURIComponent(
+    window.location.href = `mailto:sales@framestate.co?subject=Free Trial Request&body=${encodeURIComponent(
       body
     )}`;
   };

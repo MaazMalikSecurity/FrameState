@@ -39,12 +39,12 @@ const Footer = () => {
               
               {/* Email Item */}
               <a 
-                href="mailto:info@framestate.com" 
+                href="mailto:info@framestate.co" 
                 className="flex items-center gap-3 hover:text-white transition-colors group"
               >
                 {/* Email Icon */}
                 <FaRegEnvelope className="text-lg lg:text-xl 2xl:text-2xl text-accent group-hover:scale-110 transition-transform" />
-                <span>info@framestate.com</span>
+                <span>info@framestate.co</span>
               </a>
 
               {/* Phone/WhatsApp Item */}
