@@ -46,12 +46,13 @@ const About = () => {
           </div>
 
           {/* --- STATS ISLAND --- */}
-          <div className="w-full max-w-4xl mx-auto bg-[#22265c]/70 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-full p-6 md:p-10 shadow-2xl animate-fade-in-up">
+          <div className="w-full max-w-4xl mx-auto bg-[#f26b2c]/60 dark:bg-[#22265c]/70 backdrop-blur-md border border-white/20 rounded-2xl md:rounded-full p-6 md:p-10 shadow-2xl animate-fade-in-up transition-colors duration-300">
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-center text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
               
               <div className="flex flex-col items-center justify-center px-4">
                 <div className="flex items-center gap-3 mb-1">
-                   <Calendar className="w-6 h-6 text-[#f26b2c]" />
+                   {/* UPDATED: Icons reverted to white in light mode */}
+                   <Calendar className="w-6 h-6 text-white dark:text-[#f26b2c]" />
                    <h3 className="text-3xl md:text-4xl font-bold text-white">5+</h3>
                 </div>
                 <p className="text-white/90 text-sm font-semibold uppercase tracking-wider">Years Experience</p>
@@ -59,7 +60,8 @@ const About = () => {
 
               <div className="flex flex-col items-center justify-center px-4 pt-4 md:pt-0">
                 <div className="flex items-center gap-3 mb-1">
-                   <Clock className="w-6 h-6 text-[#f26b2c]" />
+                   {/* UPDATED: Icons reverted to white in light mode */}
+                   <Clock className="w-6 h-6 text-white dark:text-[#f26b2c]" />
                    <h3 className="text-3xl md:text-4xl font-bold text-white">4 Hr</h3>
                 </div>
                 <p className="text-white/90 text-sm font-semibold uppercase tracking-wider">Turnaround Time</p>
@@ -67,7 +69,8 @@ const About = () => {
 
               <div className="flex flex-col items-center justify-center px-4 pt-4 md:pt-0">
                 <div className="flex items-center gap-3 mb-1">
-                   <ImageIcon className="w-6 h-6 text-[#f26b2c]" />
+                   {/* UPDATED: Icons reverted to white in light mode */}
+                   <ImageIcon className="w-6 h-6 text-white dark:text-[#f26b2c]" />
                    <h3 className="text-3xl md:text-4xl font-bold text-white">5,000+</h3>
                 </div>
                 <p className="text-white/90 text-sm font-semibold uppercase tracking-wider">Images Daily</p>
@@ -93,13 +96,14 @@ const About = () => {
       </section>
 
       {/* --- WHAT WE DO --- */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-white dark:bg-slate-900 transition-colors duration-300">
-        <div className="max-w-[90rem] mx-auto">
+      {/* UPDATED: Added min-h-[80vh] and flex-center to equalise visual size */}
+      <section className="py-16 md:py-24 px-6 md:px-12 bg-white dark:bg-slate-900 transition-colors duration-300 min-h-[80vh] flex flex-col justify-center">
+        <div className="max-w-[90rem] mx-auto w-full">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
             
             {/* Left: Text Content */}
             <div className="text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-[#f26b2c]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-[#22265c] dark:text-[#f26b2c]">
                 What We Do
               </h2>
               <p className="text-[#22265c] dark:text-gray-200 text-lg md:text-xl leading-relaxed mb-8">
@@ -136,8 +140,9 @@ const About = () => {
       </section>
 
       {/* Next-Gen Editing System Section */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-secondary dark:bg-footer/30">
-        <div className="max-w-7xl mx-auto">
+      {/* UPDATED: Added min-h-[80vh] and flex-center to equalise visual size */}
+      <section className="py-16 md:py-24 px-6 md:px-12 bg-secondary dark:bg-footer/30 min-h-[80vh] flex flex-col justify-center">
+        <div className="max-w-7xl mx-auto w-full">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-6">
               Next-Gen Editing System
@@ -171,8 +176,9 @@ const About = () => {
       </section>
 
       {/* Core Pillars / Why Choose Us */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-white dark:bg-slate-900">
-        <div className="max-w-7xl mx-auto">
+      {/* UPDATED: Added min-h-[80vh] and flex-center to equalise visual size */}
+      <section className="py-16 md:py-24 px-6 md:px-12 bg-white dark:bg-slate-900 min-h-[80vh] flex flex-col justify-center">
+        <div className="max-w-7xl mx-auto w-full">
           
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-6">
