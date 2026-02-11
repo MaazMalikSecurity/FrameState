@@ -2,73 +2,52 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-// UPDATED: Added ChevronDown to imports
 import { ChevronLeft, ChevronRight, Check, MoveHorizontal, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// --- IMPORTS (Keep exactly as is) ---
+// --- IMPORTS (Images) ---
 import hdrThumb from "@/assets/HDR/1A.webp";
 import retouchingThumb from "@/assets/Retouching/1B.webp";
 import declutteringThumb from "@/assets/Decluttering/1B.webp";
 import twilightThumb from "@/assets/Twilight/1B.webp";
 import virtualStagingThumb from "@/assets/Virtual Staging/1B.webp";
 
-// ... (Keep all your existing image imports here) ...
-import hdr2A from "@/assets/HDR/2A.webp"; 
-import hdr2B from "@/assets/HDR/2B.webp";
-import hdr3A from "@/assets/HDR/3A.webp";
-import hdr3B from "@/assets/HDR/3B.webp";
-import hdr4A from "@/assets/HDR/4A.webp";
-import hdr4B from "@/assets/HDR/4B.webp";
-import hdr5A from "@/assets/HDR/5A.webp";
-import hdr5B from "@/assets/HDR/5B.webp";
-import hdr6A from "@/assets/HDR/6A.webp";
-import hdr6B from "@/assets/HDR/6B.webp";
+// HDR Examples
+import hdr2A from "@/assets/HDR/2A.webp"; import hdr2B from "@/assets/HDR/2B.webp";
+import hdr3A from "@/assets/HDR/3A.webp"; import hdr3B from "@/assets/HDR/3B.webp";
+import hdr4A from "@/assets/HDR/4A.webp"; import hdr4B from "@/assets/HDR/4B.webp";
+import hdr5A from "@/assets/HDR/5A.webp"; import hdr5B from "@/assets/HDR/5B.webp";
+import hdr6A from "@/assets/HDR/6A.webp"; import hdr6B from "@/assets/HDR/6B.webp";
 
-import retouching2A from "@/assets/Retouching/2A.webp";
-import retouching2B from "@/assets/Retouching/2B.webp";
-import retouching3A from "@/assets/Retouching/3A.webp";
-import retouching3B from "@/assets/Retouching/3B.webp";
-import retouching4A from "@/assets/Retouching/4A.webp";
-import retouching4B from "@/assets/Retouching/4B.webp";
-import retouching5A from "@/assets/Retouching/5A.webp";
-import retouching5B from "@/assets/Retouching/5B.webp";
-import retouching6A from "@/assets/Retouching/6A.webp";
-import retouching6B from "@/assets/Retouching/6B.webp";
+// Retouching Examples
+import retouching2A from "@/assets/Retouching/2A.webp"; import retouching2B from "@/assets/Retouching/2B.webp";
+import retouching3A from "@/assets/Retouching/3A.webp"; import retouching3B from "@/assets/Retouching/3B.webp";
+import retouching4A from "@/assets/Retouching/4A.webp"; import retouching4B from "@/assets/Retouching/4B.webp";
+import retouching5A from "@/assets/Retouching/5A.webp"; import retouching5B from "@/assets/Retouching/5B.webp";
+import retouching6A from "@/assets/Retouching/6A.webp"; import retouching6B from "@/assets/Retouching/6B.webp";
 
-import decluttering3A from "@/assets/Decluttering/3A.webp";
-import decluttering3B from "@/assets/Decluttering/3B.webp";
-import decluttering4A from "@/assets/Decluttering/4A.webp";
-import decluttering4B from "@/assets/Decluttering/4B.webp";
-import decluttering5A from "@/assets/Decluttering/5A.webp";
-import decluttering5B from "@/assets/Decluttering/5B.webp";
-import decluttering6A from "@/assets/Decluttering/6A.webp";
-import decluttering6B from "@/assets/Decluttering/6B.webp";
+// Decluttering Examples
+import decluttering3A from "@/assets/Decluttering/3A.webp"; import decluttering3B from "@/assets/Decluttering/3B.webp";
+import decluttering4A from "@/assets/Decluttering/4A.webp"; import decluttering4B from "@/assets/Decluttering/4B.webp";
+import decluttering5A from "@/assets/Decluttering/5A.webp"; import decluttering5B from "@/assets/Decluttering/5B.webp";
+import decluttering6A from "@/assets/Decluttering/6A.webp"; import decluttering6B from "@/assets/Decluttering/6B.webp";
 
-import twilight2A from "@/assets/Twilight/2A.webp";
-import twilight2B from "@/assets/Twilight/2B.webp";
-import twilight3A from "@/assets/Twilight/3A.webp";
-import twilight3B from "@/assets/Twilight/3B.webp";
-import twilight4A from "@/assets/Twilight/4A.webp";
-import twilight4B from "@/assets/Twilight/4B.webp";
-import twilight5A from "@/assets/Twilight/5A.webp";
-import twilight5B from "@/assets/Twilight/5B.webp";
-import twilight6A from "@/assets/Twilight/6A.webp";
-import twilight6B from "@/assets/Twilight/6B.webp";
+// Twilight Examples
+import twilight2A from "@/assets/Twilight/2A.webp"; import twilight2B from "@/assets/Twilight/2B.webp";
+import twilight3A from "@/assets/Twilight/3A.webp"; import twilight3B from "@/assets/Twilight/3B.webp";
+import twilight4A from "@/assets/Twilight/4A.webp"; import twilight4B from "@/assets/Twilight/4B.webp";
+import twilight5A from "@/assets/Twilight/5A.webp"; import twilight5B from "@/assets/Twilight/5B.webp";
+import twilight6A from "@/assets/Twilight/6A.webp"; import twilight6B from "@/assets/Twilight/6B.webp";
 
-import virtualStaging2A from "@/assets/Virtual Staging/2A.webp";
-import virtualStaging2B from "@/assets/Virtual Staging/2B.webp";
-import virtualStaging3A from "@/assets/Virtual Staging/3A.webp";
-import virtualStaging3B from "@/assets/Virtual Staging/3B.webp";
-import virtualStaging4A from "@/assets/Virtual Staging/4A.webp";
-import virtualStaging4B from "@/assets/Virtual Staging/4B.webp";
-import virtualStaging5A from "@/assets/Virtual Staging/5A.webp";
-import virtualStaging5B from "@/assets/Virtual Staging/5B.webp";
-import virtualStaging6A from "@/assets/Virtual Staging/6A.webp";
-import virtualStaging6B from "@/assets/Virtual Staging/6B.webp";
+// Virtual Staging Examples
+import virtualStaging2A from "@/assets/Virtual Staging/2A.webp"; import virtualStaging2B from "@/assets/Virtual Staging/2B.webp";
+import virtualStaging3A from "@/assets/Virtual Staging/3A.webp"; import virtualStaging3B from "@/assets/Virtual Staging/3B.webp";
+import virtualStaging4A from "@/assets/Virtual Staging/4A.webp"; import virtualStaging4B from "@/assets/Virtual Staging/4B.webp";
+import virtualStaging5A from "@/assets/Virtual Staging/5A.webp"; import virtualStaging5B from "@/assets/Virtual Staging/5B.webp";
+import virtualStaging6A from "@/assets/Virtual Staging/6A.webp"; import virtualStaging6B from "@/assets/Virtual Staging/6B.webp";
 
 
-// --- Data Structure (Keep exactly the same) ---
+// --- Data Structure ---
 const servicesData = [
   {
     id: "photo-retouching",
@@ -82,9 +61,9 @@ const servicesData = [
       "Vertical & horizontal perspective correction",
       "Window light balancing",
       "Lens distortion & reflection removal",
-      "Minor surface touch-ups (walls, ceilings, floors)",
+      "Minor surface touch-ups",
       "Adding realistic fire to fireplaces",
-      "TV screen replacement with realistic content"
+      "TV screen replacement"
     ],
     examples: [
       { before: retouching2B, after: retouching2A },
@@ -123,11 +102,11 @@ const servicesData = [
     tagline: "Transform empty or outdated spaces into beautifully furnished homes.",
     features: [
       "Realistic furniture placement & décor",
-      "Multiple design styles (modern, luxury, minimal, etc.)",
+      "Multiple design styles (modern, luxury, etc.)",
       "Accurate scaling & room perspective",
       "Natural lighting, shadows & reflections",
       "Rugs, wall art, lamps, plants & accessories",
-      "Lifestyle-based staging (family, luxury, rental)",
+      "Lifestyle-based staging",
       "Empty room to fully furnished transformation"
     ],
     examples: [
@@ -144,12 +123,12 @@ const servicesData = [
     thumbnail: declutteringThumb,
     tagline: "Digitally clean and organize spaces to highlight the property's best features.",
     features: [
-      "Removal of personal items (clothes, photos, toys)",
+      "Removal of personal items",
       "Removal of clutter, cables & small objects",
       "Removal of unwanted furniture or décor",
       "Wall marks, stains & imperfections removal",
       "Removal of people, pets & vehicles",
-      "Outdoor cleanup (bins, tools, yard clutter)",
+      "Outdoor cleanup",
       "Clean, distraction-free presentation"
     ],
     examples: [
@@ -264,11 +243,8 @@ const ComparisonSlide = ({ before, after }: { before: string; after: string }) =
 const Services = () => {
   const { serviceId } = useParams();
   const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // UPDATED: Scroll Indicator State
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
-  // UPDATED: Scroll Event Listener
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollIndicator(window.scrollY < 100);
@@ -282,6 +258,7 @@ const Services = () => {
     setCurrentSlide(0);
   }, [serviceId]);
 
+  // --- SERVICE DETAIL VIEW ---
   if (serviceId) {
     const service = servicesData.find((s) => s.id === serviceId);
 
@@ -310,78 +287,87 @@ const Services = () => {
       <div className="min-h-screen bg-secondary transition-colors duration-300">
         <Navbar />
         
-        {/* 1. Header & Description Section */}
+        {/* 1. Detail Hero Section */}
+        {/* UPDATED: min-h-screen for full height, centering content */}
         <section 
-          className="relative min-h-[60vh] flex items-center pt-32 pb-16 bg-cover bg-center"
+          className="relative min-h-screen flex items-center justify-center pt-20 pb-20 bg-cover bg-center overflow-hidden"
           style={{ backgroundImage: `url(${service.thumbnail})` }}
         >
-          {/* Dark Overlay for Text Visibility */}
+          {/* Overlay */}
           <div className="absolute inset-0 bg-black/75"></div>
 
-          {/* Content Container */}
-          <div className="relative z-10 w-full max-w-[140rem] mx-auto px-6 lg:px-12 xl:px-20 2xl:px-24">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 2xl:gap-24 items-center w-full">
+          {/* Content */}
+          <div className="relative z-10 w-full max-w-[90rem] mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center w-full">
               
-              {/* Left: Heading & Main Description */}
-              <div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl 3xl:text-7xl font-bold text-white mb-6 leading-tight">
+              {/* Left: Heading */}
+              <div className="animate-fade-in">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
                   {service.name}
                 </h1>
-                <p className="text-lg md:text-xl 2xl:text-2xl text-white/90 leading-relaxed">
+                <p className="text-lg md:text-xl text-white/95 leading-relaxed max-w-2xl drop-shadow-md">
                   {service.tagline}
                 </p>
                 <div className="mt-8 flex gap-4">
-                   <Button className="bg-[#f26b2c] hover:bg-[#f26b2c]/90 text-white text-base lg:text-lg px-8 py-6" size="lg" asChild>
+                   <Button className="bg-[#f26b2c] hover:bg-[#f26b2c]/90 text-white text-lg px-8 h-12" size="lg" asChild>
                       <Link to="/free-trial">Start Free Trial</Link>
                    </Button>
                 </div>
               </div>
 
-              {/* Right: "Includes" List */}
-              <div className="flex flex-col justify-center min-h-[500px] lg:min-h-[600px] 2xl:min-h-[700px]">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 2xl:p-12 border border-white/20 shadow-xl">
-                  <h3 className="text-lg 2xl:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+              {/* Right: "Included" List */}
+              {/* UPDATED: Constrained height, scrollable content if overflow, centered alignment */}
+              <div className="flex flex-col justify-center w-full animate-fade-in-up delay-100">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 shadow-2xl w-full max-w-xl lg:ml-auto max-h-[60vh] flex flex-col">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2 shrink-0">
                     What's Included
                   </h3>
-                  <ul className="space-y-3 2xl:space-y-4">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm md:text-base 2xl:text-lg text-white/90">
-                        <div className="mt-1 min-w-4 min-h-4 w-4 h-4 2xl:w-5 2xl:h-5 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center">
-                          <Check size={10} className="text-green-400 2xl:w-4 2xl:h-4" />
-                        </div>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  
+                  {/* Scrollable list container */}
+                  <div className="overflow-y-auto pr-2 custom-scrollbar">
+                    <ul className="space-y-3">
+                      {service.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-3 text-base text-white/90">
+                          <div className="mt-1 min-w-4 w-4 h-4 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center shrink-0">
+                            <Check size={10} className="text-green-400" />
+                          </div>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
 
             </div>
           </div>
 
-          {/* UPDATED: Mobile Scroll Indicator (Hidden on Desktop 'lg:hidden') */}
+          {/* Universal Scroll Indicator (Mobile & Desktop) */}
           {showScrollIndicator && (
-            <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center animate-bounce lg:hidden">
-              <div className="flex flex-col items-center gap-1 sm:gap-2">
-                <span className="text-white text-xs sm:text-sm font-medium whitespace-nowrap shadow-black/50 drop-shadow-md">Scroll Down</span>
-                <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-md" />
+            <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center animate-bounce">
+              <div 
+                className="flex flex-col items-center gap-2 cursor-pointer group" 
+                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+              >
+                <span className="text-white text-sm font-medium whitespace-nowrap drop-shadow-md group-hover:text-[#f26b2c] transition-colors">Scroll Down</span>
+                <ChevronDown className="w-6 h-6 text-white drop-shadow-md group-hover:text-[#f26b2c] transition-colors" />
               </div>
             </div>
           )}
         </section>
 
         {/* 2. Slideshow Section */}
-        <section className="py-10 pb-20 px-4 sm:px-6 lg:px-12 2xl:px-24 border-t border-border/50 bg-white dark:bg-footer/30">
-          <div className="max-w-[100rem] mx-auto text-center mb-8 pt-8">
-            <h2 className="text-2xl md:text-3xl 2xl:text-5xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
+        <section className="py-16 md:py-24 px-6 md:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
+          <div className="max-w-7xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
               See the Difference
             </h2>
-            <p className="text-muted-foreground text-sm 2xl:text-lg">
+            <p className="text-muted-foreground text-lg">
               Drag the slider to compare before and after results
             </p>
           </div>
 
-          <div className="max-w-4xl lg:max-w-6xl mx-auto relative group">
+          <div className="max-w-5xl mx-auto relative group">
             
             <div className="relative aspect-[4/3] md:aspect-video w-full bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-gray-800">
                <ComparisonSlide 
@@ -393,23 +379,23 @@ const Services = () => {
               {/* Navigation Arrows */}
               <button 
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 2xl:p-4 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-3 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
                 aria-label="Previous example"
               >
-                <ChevronLeft size={24} className="2xl:w-8 2xl:h-8" />
+                <ChevronLeft size={24} />
               </button>
 
               <button 
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-2 2xl:p-4 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[#22265c] p-3 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none z-30 backdrop-blur-sm"
                 aria-label="Next example"
               >
-                <ChevronRight size={24} className="2xl:w-8 2xl:h-8" />
+                <ChevronRight size={24} />
               </button>
             </div>
 
             {/* Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-2 mt-8">
               {service.examples.map((_, idx) => (
                 <button
                   key={idx}
@@ -430,34 +416,34 @@ const Services = () => {
     );
   }
 
-  // --- Main Services Grid ---
+  // --- SERVICE GRID VIEW (Landing) ---
   return (
     <div className="min-h-screen bg-secondary transition-colors duration-300">
       <Navbar />
-      <section className="py-12 lg:py-20 2xl:py-24">
-        <div className="text-center mb-12 pt-10 lg:pt-10">
-          <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
+      <section className="py-16 md:py-24 pt-28">
+        <div className="text-center mb-16 px-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
             Our Services
           </h2>
-          <p className="text-muted-foreground text-lg 2xl:text-2xl max-w-2xl 2xl:max-w-4xl mx-auto px-6">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
             Click on a service to see detailed examples and transformations
           </p>
         </div>
 
-        <div className="max-w-[140rem] mx-auto px-6 2xl:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 gap-y-8 gap-x-6 2xl:gap-y-12 2xl:gap-x-10 justify-items-center pb-12">
+        <div className="max-w-[90rem] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
           {servicesData.map((service) => (
             <Link
               to={`/services/${service.id}`}
               key={service.id}
-              className="relative w-full h-44 sm:h-50 md:h-56 lg:h-64 2xl:h-80 flex flex-col justify-end p-5 2xl:p-8 bg-cover bg-center rounded-xl shadow-lg text-white transition-transform hover:scale-105"
+              className="relative w-full h-64 md:h-72 lg:h-80 flex flex-col justify-end p-6 bg-cover bg-center rounded-2xl shadow-lg text-white transition-transform hover:scale-[1.02] overflow-hidden group"
               style={{ backgroundImage: `url(${service.thumbnail})` }}
             >
-              <div className="absolute inset-0 bg-black/40 rounded-xl transition-colors hover:bg-black/50"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-colors group-hover:via-black/50"></div>
               <div className="relative z-10">
-                <h3 className="text-lg md:text-xl 2xl:text-3xl font-bold mb-1">
+                <h3 className="text-2xl font-bold mb-2 group-hover:text-[#f26b2c] transition-colors">
                   {service.name}
                 </h3>
-                <p className="text-sm md:text-base 2xl:text-xl text-white/90 line-clamp-2">
+                <p className="text-base text-white/90 line-clamp-2">
                   {service.tagline}
                 </p>
               </div>

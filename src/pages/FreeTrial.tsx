@@ -4,12 +4,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronDown } from "lucide-react";
 
 const FreeTrial = () => {
-  const [open, setOpen] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -39,41 +35,43 @@ const FreeTrial = () => {
     <div className="min-h-screen bg-secondary transition-colors duration-300">
       <Navbar />
 
-      <section className="pt-32 pb-20 px-6 lg:px-16">
+      <section className="pt-32 pb-20 px-6 lg:px-12">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-[#22265c] dark:text-[#f26b2c]">
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 text-[#22265c] dark:text-[#f26b2c]">
             Start Your Free Trial
           </h1>
 
-          <p className="text-center text-muted-foreground mb-12">
-            We provide professional real estate photo editing services for real estate agencies and property marketing companies. To help agencies evaluate our quality, we offer a free trial. Interested companies can fill in the details below, and our team will review the request and contact you within 24 hours with further information.
+          <p className="text-center text-lg text-muted-foreground mb-12 max-w-xl mx-auto">
+            We provide professional real estate photo editing services. Fill in the details below, and our team will contact you within 24 hours.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <Input
-              placeholder="Name"
-              required
-              className="h-12"
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
+          <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-lg border border-border/50">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                placeholder="Name"
+                required
+                className="h-12 text-base"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+              />
 
-            <Input
-              placeholder="Company Name"
-              className="h-12"
-              value={formData.company}
-              onChange={(e) =>
-                setFormData({ ...formData, company: e.target.value })
-              }
-            />
+              <Input
+                placeholder="Company Name"
+                className="h-12 text-base"
+                value={formData.company}
+                onChange={(e) =>
+                  setFormData({ ...formData, company: e.target.value })
+                }
+              />
+            </div>
 
             <Input
               type="email"
               placeholder="Email"
               required
-              className="h-12"
+              className="h-12 text-base"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -82,8 +80,8 @@ const FreeTrial = () => {
 
             <Input
               type="number"
-              placeholder="Number of shoots per month"
-              className="h-12"
+              placeholder="Approximate shoots per month"
+              className="h-12 text-base"
               value={formData.shootsPerMonth}
               onChange={(e) =>
                 setFormData({
@@ -94,16 +92,16 @@ const FreeTrial = () => {
             />
 
             <Textarea
-              placeholder="Note"
-              className="min-h-28"
+              placeholder="Additional Notes..."
+              className="min-h-32 text-base p-4"
               value={formData.note}
               onChange={(e) =>
                 setFormData({ ...formData, note: e.target.value })
               }
             />
 
-            <Button type="submit" variant="hero" className="w-full">
-              Submit Free Trial
+            <Button type="submit" variant="hero" className="w-full text-lg h-12">
+              Submit Request
             </Button>
           </form>
         </div>
