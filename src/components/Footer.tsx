@@ -64,12 +64,11 @@ const Footer = () => {
           </div>
 
           {/* Social Links Section */}
-          <div>
+          {/* <div>
             <h4 className="text-accent font-semibold mb-3 lg:mb-5 text-base lg:text-lg 2xl:text-xl">
               Follow Us
             </h4>
             
-            {/* Changed to flex-row to display icons side-by-side */}
             <div className="flex flex-row gap-4 lg:gap-5">
               <a
                 href="https://www.instagram.com/framestate.co?igsh=bHkwNHN5cXpycXEx"
@@ -78,7 +77,6 @@ const Footer = () => {
                 className="text-gray-400 hover:text-pink-500 transition-colors transform hover:-translate-y-1 duration-300"
                 aria-label="Instagram"
               >
-                {/* Instagram Icon */}
                 <FaInstagram className="text-2xl lg:text-3xl 2xl:text-4xl" />
               </a>
 
@@ -89,11 +87,10 @@ const Footer = () => {
                 className="text-gray-400 hover:text-blue-500 transition-colors transform hover:-translate-y-1 duration-300"
                 aria-label="LinkedIn"
               >
-                {/* LinkedIn Icon */}
                 <FaLinkedin className="text-2xl lg:text-3xl 2xl:text-4xl" />
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom */}
