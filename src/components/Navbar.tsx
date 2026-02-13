@@ -108,7 +108,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li>
+            {/* <li>
               <Link
                 to="/about"
                 className={`${linkBase} ${
@@ -117,7 +117,7 @@ const Navbar = () => {
               >
                 About Us
               </Link>
-            </li>
+            </li> */}
 
             {/* Dark Mode Toggle */}
             <li>
