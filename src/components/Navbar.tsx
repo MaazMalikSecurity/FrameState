@@ -228,7 +228,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li>
+            {/* <li>
               <Link
                 to="/about"
                 onClick={closeMobileMenu}
@@ -238,7 +238,7 @@ const Navbar = () => {
               >
                 About Us
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}
