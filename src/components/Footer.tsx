@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/logowhite.png";
 
 // Import the icons
-import { FaInstagram, FaLinkedin, FaWhatsapp, FaRegEnvelope } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaPhone, FaRegEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -43,28 +43,26 @@ const Footer = () => {
                 className="flex items-center gap-3 hover:text-white transition-colors group"
               >
                 {/* Email Icon */}
-                <FaRegEnvelope className="text-lg lg:text-xl 2xl:text-2xl text-accent group-hover:scale-110 transition-transform" />
+                <FaRegEnvelope className="text-lg lg:text-xl 2xl:text-2xl group-hover:scale-110 transition-transform" />
                 <span>info@framestate.co</span>
               </a>
 
               {/* Phone/WhatsApp Item */}
               <a 
-                // Link opens WhatsApp directly
-                href="https://wa.me/923409684030" 
-                target="_blank" 
-                rel="noopener noreferrer"
+                // "tel:" opens the default phone app on mobile or desktop
+                href="tel:+19472224466" 
                 className="flex items-center gap-3 hover:text-white transition-colors group"
               >
-                {/* WhatsApp Icon */}
-                <FaWhatsapp className="text-lg lg:text-xl 2xl:text-2xl text-green-500 group-hover:scale-110 transition-transform" />
-                <span>+92 340 9684030</span>
+                {/* Phone Icon - removed text-green-500 to match the theme, or add a color if you prefer */}
+                <FaPhone className="text-lg lg:text-xl 2xl:text-2xl group-hover:scale-110 transition-transform" />
+                <span>+1 (947) 222-4466</span>
               </a>
 
             </div>
           </div>
 
           {/* Social Links Section */}
-          {/* <div>
+          <div>
             <h4 className="text-accent font-semibold mb-3 lg:mb-5 text-base lg:text-lg 2xl:text-xl">
               Follow Us
             </h4>
@@ -90,7 +88,7 @@ const Footer = () => {
                 <FaLinkedin className="text-2xl lg:text-3xl 2xl:text-4xl" />
               </a>
             </div>
-          </div> */}
+          </div>
         </div>
 
         {/* Bottom */}

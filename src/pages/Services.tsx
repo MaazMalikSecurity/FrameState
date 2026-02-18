@@ -343,7 +343,7 @@ const Services = () => {
           </div>
 
           {/* Universal Scroll Indicator (Mobile & Desktop) */}
-          {/* {showScrollIndicator && (
+          {showScrollIndicator && (
             <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center animate-bounce">
               <div 
                 className="flex flex-col items-center gap-2 cursor-pointer group" 
@@ -353,11 +353,11 @@ const Services = () => {
                 <ChevronDown className="w-6 h-6 text-white drop-shadow-md group-hover:text-[#f26b2c] transition-colors" />
               </div>
             </div>
-          )} */}
+          )}
         </section>
 
         {/* 2. Slideshow Section */}
-        {/* <section className="py-16 md:py-24 px-6 md:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
+        <section className="py-16 md:py-24 px-6 md:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
           <div className="max-w-7xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
               See the Difference
@@ -407,7 +407,7 @@ const Services = () => {
             </div>
 
           </div>
-        </section> */}
+        </section>
 
         <Footer />
       </div>

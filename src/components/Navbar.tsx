@@ -108,7 +108,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            {/* <li>
+            <li>
               <Link
                 to="/about"
                 className={`${linkBase} ${
@@ -117,10 +117,10 @@ const Navbar = () => {
               >
                 About Us
               </Link>
-            </li> */}
+            </li>
 
             {/* Dark Mode Toggle */}
-            <li>
+            {/* <li>
               <button
                 onClick={toggleDarkMode}
                 className="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
@@ -131,12 +131,12 @@ const Navbar = () => {
                   <Moon className="w-5 h-5 text-gray-700" />
                 )}
               </button>
-            </li>
+            </li> */}
           </ul>
 
           {/* Mobile Menu Button & Dark Mode Toggle */}
           <div className="flex items-center gap-2 lg:hidden">
-            <button
+            {/* <button
               onClick={toggleDarkMode}
               className="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
             >
@@ -145,7 +145,7 @@ const Navbar = () => {
               ) : (
                 <Moon className="w-5 h-5 text-gray-700" />
               )}
-            </button>
+            </button> */}
             
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -228,7 +228,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            {/* <li>
+            <li>
               <Link
                 to="/about"
                 onClick={closeMobileMenu}
@@ -238,7 +238,7 @@ const Navbar = () => {
               >
                 About Us
               </Link>
-            </li> */}
+            </li>
           </ul>
         </div>
       )}
