@@ -24,7 +24,7 @@ export const DarkModeProvider = ({ children }: { children: React.ReactNode }) =>
     }
     
     // Default to light mode
-    return false;
+    return true;
   });
 
   const toggleDarkMode = () => {
