@@ -62,7 +62,7 @@ const About = () => {
                 <div className="flex items-center gap-3 mb-1">
                    {/* UPDATED: Icons reverted to white in light mode */}
                    <Clock className="w-6 h-6 text-white dark:text-[#f26b2c]" />
-                   <h3 className="text-3xl md:text-4xl font-bold text-white">4 Hr</h3>
+                   <h3 className="text-3xl md:text-4xl font-bold text-white">12hr</h3>
                 </div>
                 <p className="text-white/90 text-sm font-semibold uppercase tracking-wider">Turnaround Time</p>
               </div>
