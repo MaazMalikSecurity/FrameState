@@ -1,73 +1,30 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 
+// Simplified context
 interface DarkModeContextType {
   darkMode: boolean;
   toggleDarkMode: () => void;
 }
 
 const DarkModeContext = createContext<DarkModeContextType>({
-  darkMode: false,
-  toggleDarkMode: () => {},
+  darkMode: true, // Always true
+  toggleDarkMode: () => {}, // Does nothing
 });
 
 export const DarkModeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check localStorage first (user's saved preference)
-    const savedMode = localStorage.getItem("darkMode");
-    if (savedMode !== null) {
-      return savedMode === "true";
-    }
-    
-    // If no saved preference, check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return true;
-    }
-    
-    // Default to light mode
-    return true;
-  });
-
-  const toggleDarkMode = () => {
-    setDarkMode(prev => {
-      const newMode = !prev;
-      // Save the user's preference
-      localStorage.setItem("darkMode", String(newMode));
-      return newMode;
-    });
-  };
-
-  // Apply dark mode class AND style to html element
+  
+  // PERMANENTLY set dark mode on mount
   useEffect(() => {
     const html = document.documentElement;
-    if (darkMode) {
-      html.classList.add("dark");
-      // This tells the browser: "The page is dark, don't auto-invert colors"
-      html.style.colorScheme = "dark"; 
-    } else {
-      html.classList.remove("dark");
-      // This tells the browser: "The page is light, keep it light even if phone is dark"
-      html.style.colorScheme = "light"; 
-    }
-  }, [darkMode]);
-
-  // Listen for system dark mode changes
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    html.classList.add("dark");
+    html.style.colorScheme = "dark";
     
-    const handleChange = (e: MediaQueryListEvent) => {
-      // Only update if user hasn't manually set a preference
-      const savedMode = localStorage.getItem("darkMode");
-      if (savedMode === null) {
-        setDarkMode(e.matches);
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    // Optional: Clear any old "light" preference so it doesn't confuse future logic
+    localStorage.removeItem("darkMode");
   }, []);
 
   return (
-    <DarkModeContext.Provider value={{ darkMode, toggleDarkMode }}>
+    <DarkModeContext.Provider value={{ darkMode: true, toggleDarkMode: () => {} }}>
       {children}
     </DarkModeContext.Provider>
   );
