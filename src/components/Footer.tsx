@@ -1,99 +1,80 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logowhite.png";
-
-// Import the icons
-import { FaInstagram, FaLinkedin, FaPhone, FaRegEnvelope } from "react-icons/fa";
+import { Mail, Phone, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    // Increased vertical padding for large screens
-    <footer className="bg-footer text-footer-foreground py-5 lg:py-10 2xl:py-14 px-4 lg:px-6 xl:px-10 2xl:px-17">
-      
-      {/* Increased max-width to 120rem (approx 1920px) */}
-      <div className="max-w-[120rem] mx-auto">
+    <footer className="border-t border-border bg-card py-10 lg:py-10 px-4 lg:px-10 transition-colors duration-300">
+      <div className="max-w-[100rem] mx-auto w-full">
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 2xl:gap-20 mb-8 lg:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16 mb-12 lg:mb-16">
           
-          {/* Logo & Description */}
+          {/* Column 1: Logo & Description */}
           <div className="flex flex-col items-start">
-            <Link to="/" className="mb-4 lg:mb-6 block">
-              {/* Logo scales up on large screens */}
+            <Link to="/" className="mb-6 block">
+              {/* YOUR LOGO */}
               <img 
                 src={logo} 
-                alt="Logo" 
-                className="h-10 lg:h-12 2xl:h-16 w-auto transition-all duration-300" 
+                alt="FrameState" 
+                className="h-10 lg:h-12 2xl:h-14 w-auto object-contain" 
               />
             </Link>
-            {/* Text scales up */}
-            <p className="text-gray-400 text-sm lg:text-base 2xl:text-lg max-w-sm">
+            {/* YOUR TEXT */}
+            <p className="text-muted-foreground text-base md:text-lg max-w-sm leading-relaxed">
               Professional real estate photo editing services.
             </p>
           </div>
 
-          {/* Contact Section */}
+          {/* Column 2: Contact */}
           <div>
-            <h4 className="text-accent font-semibold mb-3 lg:mb-5 text-base lg:text-lg 2xl:text-xl">
-              Contact
-            </h4>
-            <div className="space-y-3 text-sm lg:text-base 2xl:text-lg text-gray-400">
-              
-              {/* Email Item */}
+            <h4 className="text-primary font-bold mb-6 text-lg md:text-xl">Contact</h4>
+            <div className="space-y-4 text-base md:text-lg text-muted-foreground">
               <a 
                 href="mailto:info@framestate.co" 
-                className="flex items-center gap-3 hover:text-white transition-colors group"
+                className="flex items-center gap-3 hover:text-[#f26b2c] transition-colors duration-300"
               >
-                {/* Email Icon */}
-                <FaRegEnvelope className="text-lg lg:text-xl 2xl:text-2xl group-hover:scale-110 transition-transform" />
+                <Mail className="w-5 h-5 shrink-0" />
                 <span>info@framestate.co</span>
               </a>
-
-              {/* Phone/WhatsApp Item */}
               <a 
-                // "tel:" opens the default phone app on mobile or desktop
                 href="tel:+19472224466" 
-                className="flex items-center gap-3 hover:text-white transition-colors group"
+                className="flex items-center gap-3 hover:text-[#f26b2c] transition-colors duration-300"
               >
-                {/* Phone Icon - removed text-green-500 to match the theme, or add a color if you prefer */}
-                <FaPhone className="text-lg lg:text-xl 2xl:text-2xl group-hover:scale-110 transition-transform" />
+                <Phone className="w-5 h-5 shrink-0" />
                 <span>+1 (947) 222-4466</span>
               </a>
-
             </div>
           </div>
 
-          {/* Social Links Section */}
+          {/* Column 3: Social */}
           <div>
-            <h4 className="text-accent font-semibold mb-3 lg:mb-5 text-base lg:text-lg 2xl:text-xl">
-              Follow Us
-            </h4>
-            
-            <div className="flex flex-row gap-4 lg:gap-5">
+            <h4 className="text-primary font-bold mb-6 text-lg md:text-xl">Follow Us</h4>
+            <div className="flex gap-5">
               <a
                 href="https://www.instagram.com/framestate.co?igsh=bHkwNHN5cXpycXEx"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-500 transition-colors transform hover:-translate-y-1 duration-300"
+                className="text-muted-foreground hover:text-[#f26b2c] transition-colors duration-300 transform hover:-translate-y-1"
                 aria-label="Instagram"
               >
-                <FaInstagram className="text-2xl lg:text-3xl 2xl:text-4xl" />
+                <Instagram className="w-8 h-8" />
               </a>
-
               <a
                 href="https://www.linkedin.com/company/framestateofficial/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors transform hover:-translate-y-1 duration-300"
+                className="text-muted-foreground hover:text-[#f26b2c] transition-colors duration-300 transform hover:-translate-y-1"
                 aria-label="LinkedIn"
               >
-                <FaLinkedin className="text-2xl lg:text-3xl 2xl:text-4xl" />
+                <Linkedin className="w-8 h-8" />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-white/15 pt-6 lg:pt-8 text-center">
-          <p className="text-gray-500 text-xs lg:text-sm 2xl:text-base">
+        {/* Bottom Bar */}
+        <div className="border-t border-border pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-muted-foreground text-sm md:text-base">
             © 2026 FrameState. All rights reserved.
           </p>
         </div>

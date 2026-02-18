@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ChevronLeft, ChevronRight, Check, MoveHorizontal, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, MoveHorizontal, ChevronDown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // --- IMPORTS (Images) ---
@@ -264,11 +265,11 @@ const Services = () => {
 
     if (!service) {
       return (
-        <div className="min-h-screen bg-secondary">
+        <div className="min-h-screen bg-background text-foreground">
           <Navbar />
           <section className="pt-32 pb-20 px-6 lg:px-16 text-center">
             <h2 className="text-3xl font-bold text-red-500">Service Not Found</h2>
-            <Link to="/services" className="text-blue-600 underline mt-4 inline-block">Back to Services</Link>
+            <Link to="/services" className="text-primary underline mt-4 inline-block">Back to Services</Link>
           </section>
           <Footer />
         </div>
@@ -284,17 +285,19 @@ const Services = () => {
     };
 
     return (
-      <div className="min-h-screen bg-secondary transition-colors duration-300">
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
         <Navbar />
         
         {/* 1. Detail Hero Section */}
-        {/* UPDATED: min-h-screen for full height, centering content */}
         <section 
-          className="relative min-h-screen flex items-center justify-center pt-20 pb-20 bg-cover bg-center overflow-hidden"
+          className="relative min-h-screen flex items-center justify-center pt-32 pb-20 bg-cover bg-center overflow-hidden"
           style={{ backgroundImage: `url(${service.thumbnail})` }}
         >
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/75"></div>
+
+          {/* FADE TRANSITION OVERLAY */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
 
           {/* Content */}
           <div className="relative z-10 w-full max-w-[90rem] mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
@@ -302,34 +305,37 @@ const Services = () => {
               
               {/* Left: Heading */}
               <div className="animate-fade-in">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
                   {service.name}
                 </h1>
-                <p className="text-lg md:text-xl text-white/95 leading-relaxed max-w-2xl drop-shadow-md">
+                <p className="text-lg md:text-xl lg:text-2xl text-white/95 leading-relaxed max-w-2xl drop-shadow-md">
                   {service.tagline}
                 </p>
-                <div className="mt-8 flex gap-4">
-                   <Button className="bg-[#f26b2c] hover:bg-[#f26b2c]/90 text-white text-lg px-8 h-12" size="lg" asChild>
-                      <Link to="/free-trial">Start Free Trial</Link>
-                   </Button>
+                <div className="mt-10 flex gap-4">
+                   {/* UPDATED: Consistent Button with Index Page */}
+                   <Link
+                    to="/free-trial"
+                    className="gradient-orange text-white font-semibold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity text-xl inline-flex items-center gap-2 glow-orange shadow-lg"
+                  >
+                    Start Free Trial
+                  </Link>
                 </div>
               </div>
 
               {/* Right: "Included" List */}
-              {/* UPDATED: Constrained height, scrollable content if overflow, centered alignment */}
               <div className="flex flex-col justify-center w-full animate-fade-in-up delay-100">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/20 shadow-2xl w-full max-w-xl lg:ml-auto max-h-[60vh] flex flex-col">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2 shrink-0">
+                <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-10 border border-white/20 shadow-2xl w-full max-w-2xl lg:ml-auto max-h-[70vh] flex flex-col">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 flex items-center gap-2 shrink-0">
                     What's Included
                   </h3>
                   
                   {/* Scrollable list container */}
-                  <div className="overflow-y-auto pr-2 custom-scrollbar">
-                    <ul className="space-y-3">
+                  <div className="overflow-y-auto pr-4 custom-scrollbar">
+                    <ul className="space-y-4">
                       {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-base text-white/90">
-                          <div className="mt-1 min-w-4 w-4 h-4 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center shrink-0">
-                            <Check size={10} className="text-green-400" />
+                        <li key={idx} className="flex items-start gap-4 text-base lg:text-lg text-white/95 leading-relaxed">
+                          <div className="mt-1.5 min-w-5 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center shrink-0">
+                            <Check size={12} className="text-green-400" />
                           </div>
                           <span>{feature}</span>
                         </li>
@@ -342,7 +348,7 @@ const Services = () => {
             </div>
           </div>
 
-          {/* Universal Scroll Indicator (Mobile & Desktop) */}
+          {/* Universal Scroll Indicator */}
           {showScrollIndicator && (
             <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center animate-bounce">
               <div 
@@ -357,18 +363,19 @@ const Services = () => {
         </section>
 
         {/* 2. Slideshow Section */}
-        <section className="py-16 md:py-24 px-6 md:px-12 border-t border-border/50 bg-white dark:bg-footer/30">
+        <section className="py-16 md:py-24 px-6 md:px-12 border-t border-border/50 bg-white dark:bg-footer/30 relative z-20">
           <div className="max-w-7xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-2">
+            {/* UPDATED: Increased Text Size */}
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#22265c] dark:text-[#f26b2c] mb-4">
               See the Difference
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-xl">
               Drag the slider to compare before and after results
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto relative group">
-            
+          {/* UPDATED: Increased max-w to 7xl for larger image box */}
+          <div className="max-w-7xl mx-auto relative group">
             <div className="relative aspect-[4/3] md:aspect-video w-full bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-gray-800">
                <ComparisonSlide 
                   before={service.examples[currentSlide].before}
@@ -405,7 +412,6 @@ const Services = () => {
                 />
               ))}
             </div>
-
           </div>
         </section>
 
@@ -416,37 +422,52 @@ const Services = () => {
 
   // --- SERVICE GRID VIEW (Landing) ---
   return (
-    <div className="min-h-screen bg-secondary transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Navbar />
-      <section className="py-16 md:py-24 pt-28">
-        <div className="text-center mb-16 px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#22265c] dark:text-[#f26b2c]">
-            Our Services
-          </h2>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
-            Click on a service to see detailed examples and transformations
-          </p>
-        </div>
+      
+      <section className="pt-32 pb-20 px-6 lg:px-12">
+        <div className="max-w-[90rem] mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            className="text-center mb-16"
+          >
+            {/* Updated: Increased size for desktop (lg:text-7xl) */}
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6">
+              Our <span className="gradient-text">Services</span>
+            </h1>
+            <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Professional real estate photo editing services designed for speed, quality, and scale.
+            </p>
+          </motion.div>
 
-        <div className="max-w-[90rem] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-          {servicesData.map((service) => (
-            <Link
-              to={`/services/${service.id}`}
-              key={service.id}
-              className="relative w-full h-64 md:h-72 lg:h-80 flex flex-col justify-end p-6 bg-cover bg-center rounded-2xl shadow-lg text-white transition-transform hover:scale-[1.02] overflow-hidden group"
-              style={{ backgroundImage: `url(${service.thumbnail})` }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-colors group-hover:via-black/50"></div>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold mb-2 group-hover:text-[#f26b2c] transition-colors">
-                  {service.name}
-                </h3>
-                <p className="text-base text-white/90 line-clamp-2">
-                  {service.tagline}
-                </p>
-              </div>
-            </Link>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+            {servicesData.map((service, idx) => (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="w-full"
+              >
+                <Link
+                  to={`/services/${service.id}`}
+                  className="relative w-full h-64 md:h-72 lg:h-80 flex flex-col justify-end p-6 bg-cover bg-center rounded-2xl shadow-lg text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(242,107,44,0.5)] overflow-hidden group block"
+                  style={{ backgroundImage: `url(${service.thumbnail})` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-colors group-hover:via-black/50"></div>
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold mb-2 group-hover:text-[#f26b2c] transition-colors">
+                      {service.name}
+                    </h3>
+                    <p className="text-base text-white/90 line-clamp-2">
+                      {service.tagline}
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
       <Footer />

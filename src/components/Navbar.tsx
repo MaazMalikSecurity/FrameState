@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, Moon, Sun, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
 import logoWhite from "@/assets/logowhite.png";
@@ -15,48 +15,43 @@ const services = [
 
 const Navbar = () => {
   const location = useLocation();
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-
-  const linkBase =
-    "text-sm font-medium transition-colors hover:text-[#f26b2c]";
-  const active = darkMode ? "text-white" : "text-[#f26b2c]";
-  const inactive = darkMode ? "text-white/90" : "text-foreground";
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
     setMobileServicesOpen(false);
   };
 
+  const isActive = (path: string) => location.pathname === path;
+  const isServicesActive = location.pathname.includes("/services");
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-colors duration-300 ${
-        darkMode ? "bg-footer border-none" : "bg-white/95 border-b border-border"
-      }`}
-    >
-      {/* UPDATED: Removed max-w-[90rem] and mx-auto. 
-         Added w-full. 
-         Increased desktop padding (lg:px-8 xl:px-12) for better spacing on wide screens.
-      */}
-      <div className="w-full px-3 sm:px-4 lg:px-8 xl:px-12 2xl:px-16">
-        <div className="flex items-center justify-between h-12 lg:h-14">
-          {/* Logo */}
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50 transition-all duration-300">
+      
+      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-20">
+        
+        {/* MAINTAINED: h-16 height */}
+        <div className="flex items-center justify-between h-16">
+          
+          {/* MAINTAINED: Logo sizing */}
           <Link to="/" className="flex items-center flex-shrink-0" onClick={closeMobileMenu}>
             <img
               src={darkMode ? logoWhite : logo}
               alt="FrameState Logo"
-              className="h-7 md:h-8 lg:h-9 w-auto transition-all duration-300 hover:opacity-80"
+              className="h-8 md:h-9 lg:h-10 w-auto transition-all duration-300 hover:opacity-90"
             />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10 ml-auto">
+          <ul className="hidden lg:flex items-center gap-8 xl:gap-10 ml-auto">
             <li>
               <Link
                 to="/"
-                className={`${linkBase} ${
-                  location.pathname === "/" ? active : inactive
+                // UPDATED: Changed inactive text to 'text-white' for readability
+                className={`text-base font-medium transition-colors hover:text-primary ${
+                  isActive("/") ? "text-primary" : "text-white"
                 }`}
               >
                 Home
@@ -67,28 +62,22 @@ const Navbar = () => {
             <li className="relative group">
               <Link
                 to="/services"
-                className={`${linkBase} flex items-center gap-1 ${
-                  location.pathname.includes("/services")
-                    ? active
-                    : inactive
+                // UPDATED: Changed inactive text to 'text-white'
+                className={`text-base font-medium transition-colors hover:text-primary flex items-center gap-1 ${
+                  isServicesActive ? "text-primary" : "text-white"
                 }`}
               >
                 Services
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
               </Link>
 
-              <ul
-                className={`absolute top-full left-0 mt-2 w-64 rounded-lg shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 ${
-                  darkMode ? "bg-[#22265c] border-white/20" : "bg-white border-border"
-                }`}
-              >
+              <ul className="absolute top-full left-0 mt-2 w-64 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 glass-card shadow-xl border border-white/10 bg-background/95 backdrop-blur-md">
                 {services.map((service) => (
                   <li key={service.href}>
                     <Link
                       to={service.href}
-                      className={`block px-4 py-2 text-sm transition-colors hover:bg-[#f26b2c] hover:text-white ${
-                        darkMode ? "text-white/90" : "text-foreground"
-                      }`}
+                      // UPDATED: Dropdown items text white
+                      className="block px-4 py-2.5 text-sm text-white hover:bg-primary/10 hover:text-primary transition-colors"
                     >
                       {service.name}
                     </Link>
@@ -100,8 +89,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/free-trial"
-                className={`${linkBase} ${
-                  location.pathname === "/free-trial" ? active : inactive
+                // UPDATED: Changed inactive text to 'text-white'
+                className={`text-base font-medium transition-colors hover:text-primary ${
+                  isActive("/free-trial") ? "text-primary" : "text-white"
                 }`}
               >
                 Free Trial
@@ -111,51 +101,23 @@ const Navbar = () => {
             <li>
               <Link
                 to="/about"
-                className={`${linkBase} ${
-                  location.pathname === "/about" ? active : inactive
+                // UPDATED: Changed inactive text to 'text-white'
+                className={`text-base font-medium transition-colors hover:text-primary ${
+                  isActive("/about") ? "text-primary" : "text-white"
                 }`}
               >
                 About Us
               </Link>
             </li>
-
-            {/* Dark Mode Toggle */}
-            {/* <li>
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-              >
-                {darkMode ? (
-                  <Sun className="w-5 h-5 text-yellow-400" />
-                ) : (
-                  <Moon className="w-5 h-5 text-gray-700" />
-                )}
-              </button>
-            </li> */}
           </ul>
 
-          {/* Mobile Menu Button & Dark Mode Toggle */}
-          <div className="flex items-center gap-2 lg:hidden">
-            {/* <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5 text-yellow-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-700" />
-              )}
-            </button> */}
-            
+          {/* Mobile Menu Button */}
+          <div className="flex items-center gap-4 lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-md hover:bg-white/10 text-white transition-colors"
             >
-              {mobileMenuOpen ? (
-                <X className={`w-6 h-6 ${darkMode ? "text-white" : "text-gray-700"}`} />
-              ) : (
-                <Menu className={`w-6 h-6 ${darkMode ? "text-white" : "text-gray-700"}`} />
-              )}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -163,18 +125,15 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div
-          className={`lg:hidden border-t ${
-            darkMode ? "border-white/20 bg-footer" : "border-border bg-white"
-          }`}
-        >
-          <ul className="px-4 py-4 space-y-3">
+        <div className="lg:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl">
+          <ul className="px-6 py-6 space-y-2">
             <li>
               <Link
                 to="/"
                 onClick={closeMobileMenu}
-                className={`block py-2 text-base font-medium ${
-                  location.pathname === "/" ? active : inactive
+                // UPDATED: Mobile text to white
+                className={`block py-3 text-base font-medium border-b border-border/50 ${
+                  isActive("/") ? "text-primary" : "text-white"
                 }`}
               >
                 Home
@@ -185,8 +144,9 @@ const Navbar = () => {
             <li>
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className={`w-full flex items-center justify-between py-2 text-base font-medium ${
-                  location.pathname.includes("/services") ? active : inactive
+                // UPDATED: Mobile text to white
+                className={`w-full flex items-center justify-between py-3 text-base font-medium border-b border-border/50 ${
+                  isServicesActive ? "text-primary" : "text-white"
                 }`}
               >
                 Services
@@ -198,15 +158,14 @@ const Navbar = () => {
               </button>
 
               {mobileServicesOpen && (
-                <ul className="mt-2 ml-4 space-y-2">
+                <ul className="mt-2 ml-4 space-y-1">
                   {services.map((service) => (
                     <li key={service.href}>
                       <Link
                         to={service.href}
                         onClick={closeMobileMenu}
-                        className={`block py-2 text-sm ${
-                          darkMode ? "text-white/80 hover:text-[#f26b2c]" : "text-foreground/80 hover:text-[#f26b2c]"
-                        }`}
+                        // UPDATED: Sub-menu items white
+                        className="block py-2.5 text-sm text-white/80 hover:text-primary transition-colors"
                       >
                         {service.name}
                       </Link>
@@ -220,8 +179,9 @@ const Navbar = () => {
               <Link
                 to="/free-trial"
                 onClick={closeMobileMenu}
-                className={`block py-2 text-base font-medium ${
-                  location.pathname === "/free-trial" ? active : inactive
+                // UPDATED: Mobile text to white
+                className={`block py-3 text-base font-medium border-b border-border/50 ${
+                  isActive("/free-trial") ? "text-primary" : "text-white"
                 }`}
               >
                 Free Trial
@@ -232,8 +192,9 @@ const Navbar = () => {
               <Link
                 to="/about"
                 onClick={closeMobileMenu}
-                className={`block py-2 text-base font-medium ${
-                  location.pathname === "/about" ? active : inactive
+                // UPDATED: Mobile text to white
+                className={`block py-3 text-base font-medium ${
+                  isActive("/about") ? "text-primary" : "text-white"
                 }`}
               >
                 About Us
