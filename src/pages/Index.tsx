@@ -81,10 +81,10 @@ const Index = () => {
         {/* Background Slideshow */}
         <HeroSlideshow />
 
-        {/* 1. FADED TRANSITION OVERLAY */}
+        {/* FADED TRANSITION OVERLAY */}
         <div className="absolute bottom-0 left-0 right-0 h-32 md:h-64 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
 
-        {/* Hero Content */}
+        {/* Hero Content - Animation triggers immediately on load */}
         <div className="relative z-20 w-full px-6 md:px-12 py-20">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -92,18 +92,18 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             className="max-w-5xl ml-0 lg:ml-8 xl:ml-16"
           >
-            {/* 2. BIGGER TITLE */}
+            {/* BIGGER TITLE */}
             <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold mb-8 leading-tight text-white drop-shadow-lg text-left">
               Professional Real Estate{" "}
               <span className="gradient-text">Photo Editing</span>
             </h1>
 
-            {/* 2. BIGGER SUBTITLE */}
+            {/* BIGGER SUBTITLE */}
             <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl leading-relaxed drop-shadow-md font-medium text-left">
               High-quality, fast, and affordable editing to make your listings stand out and sell faster.
             </p>
 
-            {/* 2. BIGGER BUTTONS */}
+            {/* BIGGER BUTTONS */}
             <div className="flex flex-wrap gap-6 justify-start">
               <Link
                 to="/free-trial"
@@ -122,30 +122,32 @@ const Index = () => {
         </div>
 
         {/* Scroll Indicator */}
-          {showScroll && (
-            <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center animate-bounce">
-              <div 
-                className="flex flex-col items-center gap-2 cursor-pointer group" 
-                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-              >
-                <span className="text-white text-sm font-medium whitespace-nowrap drop-shadow-md group-hover:text-[#f26b2c] transition-colors">Scroll Down</span>
-                <ChevronDown className="w-6 h-6 text-white drop-shadow-md group-hover:text-[#f26b2c] transition-colors" />
-              </div>
+        {showScroll && (
+          <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center animate-bounce">
+            <div 
+              className="flex flex-col items-center gap-2 cursor-pointer group" 
+              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+            >
+              <span className="text-white text-sm font-medium whitespace-nowrap drop-shadow-md group-hover:text-[#f26b2c] transition-colors">Scroll Down</span>
+              <ChevronDown className="w-6 h-6 text-white drop-shadow-md group-hover:text-[#f26b2c] transition-colors" />
             </div>
-          )}
+          </div>
+        )}
       </section>
 
       {/* --- SERVICES SHOWCASE (Before/After) --- */}
       <section className="py-24 md:py-32 bg-background relative z-20">
         <div className="max-w-[120rem] mx-auto px-4 md:px-8">
           
+          {/* UPDATED: Smooth animation with viewport trigger */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
             className="text-center mb-24"
           >
-            {/* 4. BIGGER SERVICE TITLE */}
+            {/* BIGGER SERVICE TITLE */}
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 text-foreground">
               How We <span className="gradient-text">Enhance</span> Your Listings
             </h2>
@@ -156,7 +158,16 @@ const Index = () => {
 
           <div className="space-y-24 md:space-y-40">
             {services.map((service, index) => (
-              <div key={index} className="scroll-mt-32" id={service.id}>
+              // UPDATED: Wrapped each individual service in a motion div to animate as it comes into view
+              <motion.div 
+                key={index} 
+                className="scroll-mt-32" 
+                id={service.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+              >
                 <BeforeAfterScroll
                   beforeImage={service.beforeImage}
                   afterImage={service.afterImage}
@@ -172,19 +183,20 @@ const Index = () => {
                   reversed={index % 2 !== 0}
                   serviceId={service.id}
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- 3. WIDER & LARGER CTA SECTION --- */}
+      {/* --- WIDER & LARGER CTA SECTION --- */}
       <section className="py-24 px-6 relative z-20">
+        {/* UPDATED: Added duration and viewport amount to the CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          // Changed max-w-4xl to max-w-[100rem] and increased padding
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.0 }}
           className="max-w-[70rem] mx-auto text-center gradient-navy rounded-[3rem] p-16 md:p-24 relative overflow-hidden shadow-2xl"
         >
           {/* Decorative glow */}
